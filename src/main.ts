@@ -1,7 +1,7 @@
 // CDL Cachoeiro 55 Anos - Vanilla JS / TS Interaction Logic
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import './index.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
+import "./index.css";
 
 // Types
 interface LeadSubmission {
@@ -18,33 +18,33 @@ const galleryImages = [
   {
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCu71kY_yHTwR-O6Kg1qzY_766dTStBbPs9vYHdmT5nHq--RDpDFH7qVYYXCeaEBprlDjB2f4j8ovzv9NDGkwjgN91VxFlD5HgK8rp9HvCdSalssW_fDRMF4bew2lAYCwoVTe7_ewXugCR1EkOcpaH-r1y8jEdDdr_G1Dh7-_pAr_qZLy4uBn2X3UXRHWnAGE2BeDIeaqqqFFNwQR3onFGFW61ZKsFhO6iRXdA5-nRclmfFkDJCahUI14JGjuARd_EJkXOxHGCwFEio",
     caption: "Encontro Histórico dos Fundadores da CDL (1971)",
-    category: "Fundadores (1971)"
+    category: "Fundadores (1971)",
   },
   {
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDaN5UdOfqkweoDnP3_Vuci0qFwC8oeYUcznf4pnqlh3kxVBiPlqw3fsb1P2HPyiBcRLSaRLCOGzRnnEIUUGXxmCxa1lFS2edb58X8oLwIHghfsni9if_HBJBrsil6YRQ8qCwsy0lpzAFNHUXQaHP1l2OHGvAMyrEYqQJD_gRXZj2fuzIWvhRFpUWgrg9i7xTSuuehQoNAEGwg2B5UeRAN-eIXpiRvxAlGosjBgL3a1DjxORKEFKtFom3BRT0MWaHs5u4SUNzk9UcTr",
     caption: "Inauguração da Sede Atual da CDL Cachoeiro",
-    category: "Estrutura Física"
+    category: "Estrutura Física",
   },
   {
     src: "https://lh3.googleusercontent.com/aida-public/AB6AXuC_qFSSuxQgKnMoUcht5lFwaUMKGlfUuSqjPotMgKTbFGtvTLg8ouiesLfIb3Y3bnp_KBS1WOvBE-c4XF8PP9-hmQZhhXQ05FsTBQOpUzWnso61vPWpcy4rZBgIXoaeLSKv__O_uhjQ96mTPsuDrMEuLpAoKhnXAGt0N14QO2G4b6C4GNW4r53Xh_hBZFgUOwS1nc0S9Nz9XRqFBwi2p2rGMSdAjx044wGHQrDnW2njkTxlKikbHdNWeCVnxy4Bv736ROF7IyyTYyD5",
     caption: "Grandes Reuniões com Lojistas do Sul Capixaba",
-    category: "Convenção e Fórum"
+    category: "Convenção e Fórum",
   },
   {
     src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
     caption: "Equipe Técnica e Postos de Atendimento de Certificação Digital",
-    category: "Tecnologia"
+    category: "Tecnologia",
   },
   {
     src: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
     caption: "Premiação Mérito Lojista e Eventos de Integração",
-    category: "Comunidade"
+    category: "Comunidade",
   },
   {
     src: "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&w=800&q=80",
     caption: "Varejo Regional Fortalecido pelas Soluções do SPC",
-    category: "Ponto Comercial"
-  }
+    category: "Ponto Comercial",
+  },
 ];
 
 // Initialize on DOM Content Loaded
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize AOS (Animate on Scroll)
   AOS.init({
     duration: 800,
-    easing: 'ease-out-quad',
+    easing: "ease-out-quad",
     once: true,
     offset: 120, // offset (in px) from the original trigger point
   });
@@ -73,9 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileMenuToggle.addEventListener("click", () => {
       mobileDropdown.classList.toggle("hidden");
     });
-    
+
     // Close mobile dropdown when clicking a link
-    mobileLinks.forEach(link => {
+    mobileLinks.forEach((link) => {
       link.addEventListener("click", () => {
         mobileDropdown.classList.add("hidden");
       });
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- SOLUTIONS ACCORDION (BENEFITS TOGGLE) ---
   const accordionButtons = document.querySelectorAll(".accordion-btn");
-  accordionButtons.forEach(btn => {
+  accordionButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const targetId = btn.getAttribute("data-target");
       if (!targetId) return;
@@ -95,17 +95,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (targetList) {
         const isHidden = targetList.classList.contains("hidden");
-        
+
         // Close all other accordions first for a clean accordion flow
-        document.querySelectorAll(".accordion-btn").forEach(otherBtn => {
+        document.querySelectorAll(".accordion-btn").forEach((otherBtn) => {
           const otherTargetId = otherBtn.getAttribute("data-target");
           if (otherTargetId && otherTargetId !== targetId) {
             const otherList = document.getElementById(otherTargetId);
             const otherIcon = otherBtn.querySelector(".accordion-icon");
             const otherTextSpan = otherBtn.querySelector(".accordion-text");
             if (otherList) otherList.classList.add("hidden");
-            if (otherIcon) (otherIcon as HTMLElement).style.transform = "rotate(0deg)";
-            if (otherTextSpan) otherTextSpan.textContent = "Ver benefícios específicos";
+            if (otherIcon)
+              (otherIcon as HTMLElement).style.transform = "rotate(0deg)";
+            if (otherTextSpan)
+              otherTextSpan.textContent = "Ver benefícios específicos";
           }
         });
 
@@ -126,7 +128,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- SEJA ASSOCIADO CONTACT MODAL FLOW ---
   const contactModal = document.getElementById("contact-modal");
   const openContactBtn = document.getElementById("open-contact-btn");
-  const openContactMobileBtn = document.getElementById("open-contact-mobile-btn");
+  const openContactMobileBtn = document.getElementById(
+    "open-contact-mobile-btn",
+  );
   const ctaContactBtn = document.getElementById("cta-contact-btn");
   const closeContactModal = document.getElementById("close-contact-modal");
   const associationForm = document.getElementById("association-form");
@@ -150,9 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (openContactBtn) openContactBtn.addEventListener("click", openContact);
-  if (openContactMobileBtn) openContactMobileBtn.addEventListener("click", openContact);
+  if (openContactMobileBtn)
+    openContactMobileBtn.addEventListener("click", openContact);
   if (ctaContactBtn) ctaContactBtn.addEventListener("click", openContact);
-  if (closeContactModal) closeContactModal.addEventListener("click", closeContact);
+  if (closeContactModal)
+    closeContactModal.addEventListener("click", closeContact);
   if (successCloseBtn) successCloseBtn.addEventListener("click", closeContact);
 
   // Close contact modal when clicking overlay background
@@ -169,10 +175,14 @@ document.addEventListener("DOMContentLoaded", () => {
     associationForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const companyNameInput = document.getElementById("company-name") as HTMLInputElement;
+      const companyNameInput = document.getElementById(
+        "company-name",
+      ) as HTMLInputElement;
       const cnpjInput = document.getElementById("cnpj") as HTMLInputElement;
       const phoneInput = document.getElementById("phone") as HTMLInputElement;
-      const ownerNameInput = document.getElementById("owner-name") as HTMLInputElement;
+      const ownerNameInput = document.getElementById(
+        "owner-name",
+      ) as HTMLInputElement;
       const emailInput = document.getElementById("email") as HTMLInputElement;
 
       const newSubmission: LeadSubmission = {
@@ -181,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
         phone: phoneInput?.value || "",
         ownerName: ownerNameInput?.value || "",
         email: emailInput?.value || "",
-        submittedAt: new Date().toISOString()
+        submittedAt: new Date().toISOString(),
       };
 
       // Real integration: store to localStorage
@@ -209,13 +219,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const videoModal = document.getElementById("video-modal");
   const playVideoTrigger = document.getElementById("play-video-trigger");
   const closeVideoModalBtn = document.getElementById("close-video-modal");
-  const institutionalVideo = document.getElementById("institutional-video") as HTMLVideoElement;
+  const institutionalVideo = document.getElementById(
+    "institutional-video",
+  ) as HTMLVideoElement;
 
   const openVideo = () => {
     if (videoModal && institutionalVideo) {
       videoModal.classList.remove("hidden");
       videoModal.classList.add("flex");
-      institutionalVideo.play().catch(e => console.log("Auto-play blocked, playing on user manual click"));
+      institutionalVideo
+        .play()
+        .catch((e) =>
+          console.log("Auto-play blocked, playing on user manual click"),
+        );
     }
   };
 
@@ -228,7 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (playVideoTrigger) playVideoTrigger.addEventListener("click", openVideo);
-  if (closeVideoModalBtn) closeVideoModalBtn.addEventListener("click", closeVideo);
+  if (closeVideoModalBtn)
+    closeVideoModalBtn.addEventListener("click", closeVideo);
 
   // Close video modal when clicking on overlay background
   if (videoModal) {
@@ -257,7 +274,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryItems = document.querySelectorAll(".gallery-item");
   const lightboxModal = document.getElementById("lightbox-modal");
   const closeLightboxBtn = document.getElementById("close-lightbox");
-  const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+  const lightboxImg = document.getElementById(
+    "lightbox-img",
+  ) as HTMLImageElement;
   const lightboxCounter = document.getElementById("lightbox-counter");
   const lightboxPrevBtn = document.getElementById("lightbox-prev");
   const lightboxNextBtn = document.getElementById("lightbox-next");
@@ -295,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  galleryItems.forEach(item => {
+  galleryItems.forEach((item) => {
     item.addEventListener("click", () => {
       const idxAttr = item.getAttribute("data-img-idx");
       if (idxAttr !== null) {
@@ -305,10 +324,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  if (closeLightboxBtn) closeLightboxBtn.addEventListener("click", closeLightbox);
+  if (closeLightboxBtn)
+    closeLightboxBtn.addEventListener("click", closeLightbox);
   if (lightboxPrevBtn) {
     lightboxPrevBtn.addEventListener("click", () => {
-      const nextIndex = (currentImgIndex - 1 + galleryImages.length) % galleryImages.length;
+      const nextIndex =
+        (currentImgIndex - 1 + galleryImages.length) % galleryImages.length;
       updateLightboxImage(nextIndex);
     });
   }
