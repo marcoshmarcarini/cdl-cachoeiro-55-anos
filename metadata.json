@@ -1,6 +1,6 @@
 {
   "name": "CDL Cachoeiro 55 Anos",
-  "description": "Página oficial comemorativa de 55 anos de protagonismo, inovação e desenvolvimento regional da CDL Cachoeiro.",
+  "description": "Página oficial comemorativa de 55 anos da CDL Cachoeiro de Itapemirim - História, linha do tempo, pilares, eventos e homenagens ao comércio regional.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
