@@ -735,7 +735,7 @@ export default function HomePage() {
                   
                   <div className="relative rounded-2xl overflow-hidden border border-secondary-brand/30 bg-[#00193c] shadow-2xl group">
                     <Image
-                      src="/img/layout/celso.png"
+                      src="/img/layout/Celso.png"
                       alt="Celso Luiz Costa - Presidente da CDL Cachoeiro"
                       width={600}
                       height={750}
