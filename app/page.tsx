@@ -711,10 +711,8 @@ export default function HomePage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-5">
-                    <span className="text-[10px] font-bold text-secondary-brand uppercase tracking-wider mb-1">
-                      {img.category}
-                    </span>
-                    <p className="text-white text-sm font-semibold">{img.caption}</p>
+                  
+                    <p className="text-white text-sm font-semibold">{img.title}</p>
                   </div>
                 </div>
               ))}
@@ -1500,14 +1498,14 @@ export default function HomePage() {
           </div>
 
           {/* Lightbox Caption Footer */}
-          <div className="p-6 text-center max-w-xl mx-auto z-10 bg-black/30 backdrop-blur-sm rounded-xl mb-4 border border-white/5">
+          {/* <div className="p-6 text-center max-w-xl mx-auto z-10 bg-black/30 backdrop-blur-sm rounded-xl mb-4 border border-white/5">
             <p className="text-white font-headline text-base font-bold">
               {galleryImages[currentImgIndex].caption}
             </p>
             <p className="text-secondary-brand text-xs font-semibold tracking-wider mt-1 uppercase">
               {galleryImages[currentImgIndex].category}
             </p>
-          </div>
+          </div> */}
         </div>
       )}
 
