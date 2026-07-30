@@ -918,7 +918,7 @@ export default function HomePage() {
                   blurDataURL={BLUR_PLACEHOLDER}
                   referrerPolicy="no-referrer"
                   className="w-32 h-32 sm:w-40 sm:h-40 rounded-xl object-cover border border-white/10 shrink-0 mx-auto"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZg6CpxUVHw8cqz-FVnQ9PdiMcfpULRmiWGn0_9iAlqtZV9VN5xD7C59FWy1Gs7mvK-7cnPySycQI-6PlJ-tD-gu2i9WDKclXUOZBDNF5CxWEkE5PR60uWeuQnw8OnZYJGuZ91TgrXkGwQjl7uo8eKKd0iC62ggQh-kLF3YgvAzk5izPO4_qENH3j6fBJqYPUQ2yVRbKK6kCWL68Pw22M-04mul4VzanliT8QlmCDfVNAdQuSvGCfCMn4hnc0Ung092XeA7cggEhWC"
+                  src="/img/layout/joao_kleber.png"
                 />
                 <div className="space-y-3">
                   <span className="text-[10px] font-bold text-secondary-brand bg-secondary-brand/10 px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">
@@ -950,7 +950,7 @@ export default function HomePage() {
                   blurDataURL={BLUR_PLACEHOLDER}
                   referrerPolicy="no-referrer"
                   className="w-32 h-32 sm:w-40 sm:h-40 rounded-xl object-cover border border-white/10 shrink-0 mx-auto"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV0mL6MFeogNWW2jNijdIgdqpXipNW4OsHdlnhvq8krJmaZrwEyKwh6kdHRSe0zQv97lXJg_6Q5wE4yHn7Mu-g8z1tKRXZTMmlp5vL96PkqrMBTz-dEp98GYfFbdQ2CDNTS5-Xsqo7zpDOPM7-w81wFo-iMGBy3VXcbjNbUBcR9D0LkPBrv5kTC-BOLSY1tt4iuSNdnyRyp5IOUYTEcXoc8qQhALPpRdhBXEKWiiO0kgkF2TQGghVFXkJg-haWYK8_heQ5oDXVc5ob"
+                  src="/img/layout/Celso.png"
                 />
                 <div className="space-y-3">
                   <span className="text-[10px] font-bold text-secondary-brand bg-secondary-brand/10 px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">

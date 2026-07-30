@@ -1,4 +1,4 @@
-// File: E:\Desenvolvimento\GitHub\cdl-cachoeiro-55-anos\cdl-55\app\api\gallery\route.ts
+// File: E:\Desenvolvimento\GitHub\cdl-cachoeiro-55-anos\app\api\gallery\route.ts
 import * as entry from '../../../../../app/api/gallery/route.js'
 import type { NextRequest } from 'next/server.js'
 

@@ -2442,7 +2442,7 @@ body {
   font-family: var(--font-sans);
 }
 .geometric-ribbon {
-  background-image: url('/img/pattern.png');
+  background-image: url('/img/layout/pattern.png');
   background-repeat: repeat-x;
   background-size: cover;
   background-position: center;
