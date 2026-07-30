@@ -216,7 +216,7 @@ export default function HomePage() {
           {/* Logo Brand */}
           <a href="#" className="flex items-center gap-3">
             <Image
-              src="/img/cdlcachoeiro.png"
+              src="/img/layout/cdlcachoeiro.png"
               alt="CDL Cachoeiro 55 Anos"
               width={160}
               height={48}
