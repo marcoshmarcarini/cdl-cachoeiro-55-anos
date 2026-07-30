@@ -1483,7 +1483,7 @@ export default function HomePage() {
               referrerPolicy="no-referrer"
               className="max-w-full max-h-[70vh] w-auto h-auto rounded-lg object-contain shadow-2xl transition-all duration-300"
               src={galleryImages[currentImgIndex].src}
-              alt={galleryImages[currentImgIndex].caption}
+              alt={galleryImages[currentImgIndex].title}
             />
 
             {/* Next Button */}
