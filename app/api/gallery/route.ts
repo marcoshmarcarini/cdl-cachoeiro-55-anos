@@ -23,7 +23,7 @@ const FALLBACK_IMAGES: GalleryItem[] = [
   {
     id: 3,
     src: "/img/novas_fotos/Auditorio vazio.jpg.jpeg",
-    title: "Auditório Vazio"
+    title: "Auditório"
 
   },
   {
@@ -40,7 +40,7 @@ const FALLBACK_IMAGES: GalleryItem[] = [
   {
     id: 6,
     src: "/img/novas_fotos/Evento comemorativo 30 anos1.jpg.jpeg",
-    title: "Evento Comemorativo 30 Anos - Parte 2"
+    title: "Evento Comemorativo 30 Anos"
   },
   {
     id: 7,
@@ -50,7 +50,7 @@ const FALLBACK_IMAGES: GalleryItem[] = [
   {
     id: 8,
     src: "/img/novas_fotos/Fazendo consulta ficharios.jpg.jpeg",
-    title: "Fazendo Consulta em Fichários"
+    title: "Consulta em Fichários"
   },
   {
     id:9,
@@ -69,7 +69,7 @@ const FALLBACK_IMAGES: GalleryItem[] = [
   },
   {
     id: 12,
-    src: "/img/novas_fotos/Foto interior da sede antiga.jpg.jpeg",
+    src: "/img/novas_fotos/Foto-Interior-da-Sede-Antiga.png",
     title: "Interior da Sede Antiga"
   },
   {
@@ -80,17 +80,17 @@ const FALLBACK_IMAGES: GalleryItem[] = [
   {
     id: 14,
     src: "/img/novas_fotos/Foto soreito na praça publico.JPG.jpeg",
-    title: "Sorteio na Praça - Público"
+    title: "Sorteio na Praça"
   },
   {
     id: 15,
     src: "/img/novas_fotos/Foto sorteio praça2.JPG.jpeg",
-    title: "Sorteio na Praça - Parte 2"
+    title: "Sorteio na Praça"
   },
   {
     id: 16,
     src: "/img/novas_fotos/Fotos dos Presidente - 30 Anos_page-0001.jpg.jpeg",
-    title: "Fotos dos Presidentes - 30 Anos"
+    title: "Aniversário de 30 Anos - Fotos dos Presidentes"
   },
   {
     id: 17,
@@ -130,12 +130,12 @@ const FALLBACK_IMAGES: GalleryItem[] = [
   {
     id: 24,
     src: "/img/novas_fotos/Lançamento CDL Corretora1.JPG.jpeg",
-    title: "Lançamento da CDL Corretora - Parte 2"
+    title: "Lançamento da CDL Corretora"
   },
   {
     id: 25,
     src: "/img/novas_fotos/Publicos participação das ações.jpg.jpeg",
-    title: "Público Participando das Ações"
+    title: "Ações da CDL Cachoeiro"
   },
   {
     id: 26,
@@ -155,7 +155,7 @@ const FALLBACK_IMAGES: GalleryItem[] = [
   {
     id: 29,
     src: "/img/novas_fotos/Troféu Deusa da Forturna.jpg.jpeg",
-    title: "Troféu Deusa da Fortuna - Parte 2"
+    title: "Troféu Deusa da Fortuna"
   },
 ];
 

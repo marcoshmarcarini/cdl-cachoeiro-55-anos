@@ -20,8 +20,11 @@ import {
   CheckCircle2,
   Star,
   Film,
-  ChevronUp
+  ChevronUp,
 } from "lucide-react";
+import NossosPresidentes from "./components/NossosPresidentes";
+import AtualDiretoria from "./components/AtualDiretoria";
+import Link from "next/link";
 
 interface LeadSubmission {
   companyName: string;
@@ -32,12 +35,13 @@ interface LeadSubmission {
   submittedAt: string;
 }
 
-const BLUR_PLACEHOLDER = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwMDE5M2MiLz48L3N2Zz4=";
+const BLUR_PLACEHOLDER =
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwMDE5M2MiLz48L3N2Zz4=";
 
 export default function HomePage() {
   // Gallery images dynamic state from API
   const [galleryImages, setGalleryImages] = useState<
-    Array<{ src: string; title: string; }>
+    Array<{ src: string; title: string }>
   >([
     {
       src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCu71kY_yHTwR-O6Kg1qzY_766dTStBbPs9vYHdmT5nHq--RDpDFH7qVYYXCeaEBprlDjB2f4j8ovzv9NDGkwjgN91VxFlD5HgK8rp9HvCdSalssW_fDRMF4bew2lAYCwoVTe7_ewXugCR1EkOcpaH-r1y8jEdDdr_G1Dh7-_pAr_qZLy4uBn2X3UXRHWnAGE2BeDIeaqqqFFNwQR3onFGFW61ZKsFhO6iRXdA5-nRclmfFkDJCahUI14JGjuARd_EJkXOxHGCwFEio",
@@ -58,7 +62,11 @@ export default function HomePage() {
     fetch("/api/gallery")
       .then((res) => res.json())
       .then((data) => {
-        if (data.success && Array.isArray(data.images) && data.images.length > 0) {
+        if (
+          data.success &&
+          Array.isArray(data.images) &&
+          data.images.length > 0
+        ) {
           setGalleryImages(data.images);
         }
       })
@@ -96,17 +104,19 @@ export default function HomePage() {
 
   useEffect(() => {
     // Initialize AOS safely on client-side
-    import("aos").then((AOS) => {
-      AOS.default.init({
-        duration: 800,
-        easing: "ease-out-quad",
-        once: true,
-        offset: 0,
+    import("aos")
+      .then((AOS) => {
+        AOS.default.init({
+          duration: 800,
+          easing: "ease-out-quad",
+          once: true,
+          offset: 0,
+        });
+        AOS.default.refresh();
+      })
+      .catch((err) => {
+        console.warn("AOS init notice:", err);
       });
-      AOS.default.refresh();
-    }).catch((err) => {
-      console.warn("AOS init notice:", err);
-    });
 
     const handleScroll = () => {
       if (window.scrollY > 400) {
@@ -130,7 +140,9 @@ export default function HomePage() {
       }
       if (lightboxOpen) {
         if (e.key === "ArrowLeft") {
-          setCurrentImgIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+          setCurrentImgIndex(
+            (prev) => (prev - 1 + galleryImages.length) % galleryImages.length,
+          );
         }
         if (e.key === "ArrowRight") {
           setCurrentImgIndex((prev) => (prev + 1) % galleryImages.length);
@@ -224,27 +236,44 @@ export default function HomePage() {
               referrerPolicy="no-referrer"
               priority
             />
-            
           </a>
 
           {/* Desktop Navigation Menu */}
           <nav className="hidden lg:flex items-center gap-8">
-            <a href="#historia" className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium">
+            <a
+              href="#historia"
+              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
+            >
               História
             </a>
-            <a href="#manifesto" className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium">
+            <a
+              href="#manifesto"
+              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
+            >
               Manifesto
             </a>
-            <a href="#galeria" className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium">
+            <a
+              href="#galeria"
+              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
+            >
               Galeria
             </a>
-            <a href="#presidente" className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium">
+            <a
+              href="#presidente"
+              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
+            >
               Nosso Presidente
             </a>
-            <a href="#presidentes" className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium">
+            <a
+              href="#presidentes"
+              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
+            >
               Presidentes
             </a>
-            <a href="#servicos" className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium">
+            <a
+              href="#servicos"
+              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
+            >
               Serviços
             </a>
 
@@ -266,7 +295,11 @@ export default function HomePage() {
               className="text-on-background hover:text-secondary-brand transition-colors p-2"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -349,7 +382,10 @@ export default function HomePage() {
 
           <div className="relative z-10 w-full max-w-6xl mx-auto text-center flex flex-col items-center">
             {/* Tag & Anniversary badge */}
-            <div className="flex flex-col items-center mb-6" data-aos="fade-down">
+            <div
+              className="flex flex-col items-center mb-6"
+              data-aos="fade-down"
+            >
               <span className="bg-secondary-brand/10 border border-secondary-brand/20 text-secondary-brand text-xs font-bold px-4 py-1.5 rounded-full tracking-[0.2em] uppercase flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 animate-pulse text-secondary-brand" />
                 1971 - 2026 • 55 ANOS DE HISTÓRIA
@@ -369,7 +405,11 @@ export default function HomePage() {
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              Conheça a história da <strong className="text-white">CDL Cachoeiro</strong>, uma trajetória sólida que revolucionou o comércio do Sul do Espírito Santo e continua impulsionando o futuro tecnológico de nossas empresas.
+              Conheça a história da{" "}
+              <strong className="text-white">CDL Cachoeiro</strong>, uma
+              trajetória sólida que revolucionou o comércio do Sul do Espírito
+              Santo e continua impulsionando o futuro tecnológico de nossas
+              empresas.
             </p>
 
             {/* Simple Elegant Video Player Cover */}
@@ -397,7 +437,6 @@ export default function HomePage() {
                   <p className="font-headline text-lg sm:text-xl font-bold text-white drop-shadow-lg">
                     55 Anos CDL Cachoeiro
                   </p>
-                  
                 </div>
                 <span className="hidden sm:inline-flex bg-white/10 text-white text-[10px] font-bold px-3 py-1 rounded-md tracking-wider">
                   ASSISTIR AGORA
@@ -411,7 +450,10 @@ export default function HomePage() {
         <div className="geometric-ribbon w-full shadow-inner relative z-10" />
 
         {/* MANIFESTO SECTION */}
-        <section id="manifesto" className="py-24 md:py-32 bg-primary-container relative">
+        <section
+          id="manifesto"
+          className="py-24 md:py-32 bg-primary-container relative"
+        >
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center overflow-hidden">
               {/* Left Side: Copywriting */}
@@ -421,17 +463,27 @@ export default function HomePage() {
                 </span>
                 <h2 className="font-headline text-3xl md:text-5xl font-black text-white leading-tight">
                   Força local com <br />
-                  <span className="text-secondary-brand">visão de vanguarda.</span>
+                  <span className="text-secondary-brand">
+                    visão de vanguarda.
+                  </span>
                 </h2>
                 <div className="space-y-6 text-on-surface-variant font-sans text-sm md:text-base leading-relaxed">
                   <p>
-                    Não somos apenas um banco de dados de proteção ao crédito. Somos a união de voluntários, lojistas, prestadores de serviços e industriais de Cachoeiro de Itapemirim que decidiram escrever o destino econômico de nossa região.
+                    Não somos apenas um banco de dados de proteção ao crédito.
+                    Somos a união de voluntários, lojistas, prestadores de
+                    serviços e industriais de Cachoeiro de Itapemirim que
+                    decidiram escrever o destino econômico de nossa região.
                   </p>
                   <p className="border-l-2 border-secondary-brand pl-4 italic text-white/90">
-                    "Há 55 anos, saímos da era das transações baseadas no 'fio do bigode' para estruturar uma economia moderna, sustentável e plenamente digitalizada no sul capixaba."
+                    "Há 55 anos, saímos da era das transações baseadas no 'fio
+                    do bigode' para estruturar uma economia moderna, sustentável
+                    e plenamente digitalizada no sul capixaba."
                   </p>
                   <p>
-                    Da histórica comissão pioneira de 1971 até os modernos emissores de certificação digital de hoje, a CDL Cachoeiro mantém o mesmo propósito original: apoiar o comerciante, aproximar parceiros e impulsionar o faturamento regional.
+                    Da histórica comissão pioneira de 1971 até os modernos
+                    emissores de certificação digital de hoje, a CDL Cachoeiro
+                    mantém o mesmo propósito original: apoiar o comerciante,
+                    aproximar parceiros e impulsionar o faturamento regional.
                   </p>
                 </div>
               </div>
@@ -446,8 +498,12 @@ export default function HomePage() {
                   <div className="w-12 h-12 bg-secondary-brand/10 rounded-lg flex items-center justify-center mb-4 mx-auto text-secondary-brand">
                     <Users className="w-6 h-6 text-secondary-brand" />
                   </div>
-                  <h3 className="font-headline font-black text-3xl text-white mb-1">+800</h3>
-                  <p className="text-xs text-on-surface-variant uppercase font-semibold">Associados Ativos</p>
+                  <h3 className="font-headline font-black text-3xl text-white mb-1">
+                    +800
+                  </h3>
+                  <p className="text-xs text-on-surface-variant uppercase font-semibold">
+                    Associados Ativos
+                  </p>
                 </div>
 
                 <div
@@ -458,8 +514,12 @@ export default function HomePage() {
                   <div className="w-12 h-12 bg-secondary-brand/10 rounded-lg flex items-center justify-center mb-4 mx-auto text-secondary-brand">
                     <Award className="w-6 h-6 text-secondary-brand" />
                   </div>
-                  <h3 className="font-headline font-black text-3xl text-white mb-1">5º Lugar</h3>
-                  <p className="text-xs text-on-surface-variant uppercase font-semibold">Ranking Emissões Nac.</p>
+                  <h3 className="font-headline font-black text-3xl text-white mb-1">
+                    5º Lugar
+                  </h3>
+                  <p className="text-xs text-on-surface-variant uppercase font-semibold">
+                    Ranking Emissões Nac.
+                  </p>
                 </div>
 
                 <div
@@ -470,8 +530,12 @@ export default function HomePage() {
                   <div className="w-12 h-12 bg-secondary-brand/10 rounded-lg flex items-center justify-center mb-4 mx-auto text-secondary-brand">
                     <Calendar className="w-6 h-6 text-secondary-brand" />
                   </div>
-                  <h3 className="font-headline font-black text-3xl text-white mb-1">55 Anos</h3>
-                  <p className="text-xs text-on-surface-variant uppercase font-semibold">De Progresso & Conquistas</p>
+                  <h3 className="font-headline font-black text-3xl text-white mb-1">
+                    55 Anos
+                  </h3>
+                  <p className="text-xs text-on-surface-variant uppercase font-semibold">
+                    De Progresso & Conquistas
+                  </p>
                 </div>
               </div>
             </div>
@@ -479,9 +543,15 @@ export default function HomePage() {
         </section>
 
         {/* TIMELINE / LINHA DO TEMPO SECTION */}
-        <section id="historia" className="py-24 bg-gradient-to-b from-[#002351] to-[#00193c] relative overflow-hidden">
+        <section
+          id="historia"
+          className="py-24 bg-gradient-to-b from-[#002351] to-[#00193c] relative overflow-hidden"
+        >
           <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4" data-aos="fade-up">
+            <div
+              className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4"
+              data-aos="fade-up"
+            >
               <div>
                 <span className="text-secondary-brand font-bold text-xs tracking-[0.2em] uppercase mb-3 block">
                   Linha do Tempo
@@ -511,7 +581,10 @@ export default function HomePage() {
             </div>
 
             {/* Horizontal scrolling container */}
-            <div ref={timelineRef} className="timeline-scroll flex gap-8 overflow-x-auto pb-8 scroll-smooth snap-x">
+            <div
+              ref={timelineRef}
+              className="timeline-scroll flex gap-8 overflow-x-auto pb-8 scroll-smooth snap-x"
+            >
               {/* Milestone 1971 */}
               <div
                 className="min-w-[300px] sm:min-w-[360px] snap-start bg-[#0b132b]/40 border border-white/5 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/20 transition-all group"
@@ -522,9 +595,13 @@ export default function HomePage() {
                   <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
                     1971
                   </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">O Nascimento da Entidade</h3>
+                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
+                    O Nascimento da Entidade
+                  </h3>
                   <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Fundada em 30 de julho, surge da união de empresários que trouxeram o SPC, revolucionando a venda a prazo e trazendo credibilidade e agilidade para o varejo de Cachoeiro.
+                    Fundada em 30 de julho, surge da união de empresários que
+                    trouxeram o SPC, revolucionando a venda a prazo e trazendo
+                    credibilidade e agilidade para o varejo de Cachoeiro.
                   </p>
                 </div>
                 <div className="border-t border-white/5 pt-4 mt-6">
@@ -544,9 +621,13 @@ export default function HomePage() {
                   <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
                     1978
                   </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">Patrimônio Institucional</h3>
+                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
+                    Patrimônio Institucional
+                  </h3>
                   <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    A entidade conquista sua primeira sede administrativa com a aquisição de sua primeira sala no Edifício Hércules, consolidando um espaço físico próprio de atendimento.
+                    A entidade conquista sua primeira sede administrativa com a
+                    aquisição de sua primeira sala no Edifício Hércules,
+                    consolidando um espaço físico próprio de atendimento.
                   </p>
                 </div>
                 <div className="border-t border-white/5 pt-4 mt-6">
@@ -566,9 +647,13 @@ export default function HomePage() {
                   <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
                     1988
                   </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">Informatização & Agilidade</h3>
+                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
+                    Informatização & Agilidade
+                  </h3>
                   <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Aceleração da transformação digital e início da adaptação de processos internos de busca manual em papel para as consultas velozes digitais.
+                    Aceleração da transformação digital e início da adaptação de
+                    processos internos de busca manual em papel para as
+                    consultas velozes digitais.
                   </p>
                 </div>
                 <div className="border-t border-white/5 pt-4 mt-6">
@@ -588,9 +673,13 @@ export default function HomePage() {
                   <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
                     1990
                   </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">Grandes Campanhas de Natal</h3>
+                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
+                    Grandes Campanhas de Natal
+                  </h3>
                   <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Lançamento de campanhas promocionais com sorteio de automóveis na Praça Jerônimo Monteiro, atraindo consumidores de todo o sul capixaba.
+                    Lançamento de campanhas promocionais com sorteio de
+                    automóveis na Praça Jerônimo Monteiro, atraindo consumidores
+                    de todo o sul capixaba.
                   </p>
                 </div>
                 <div className="border-t border-white/5 pt-4 mt-6">
@@ -610,9 +699,13 @@ export default function HomePage() {
                   <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
                     1996
                   </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">Digitalização do SPC</h3>
+                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
+                    Digitalização do SPC
+                  </h3>
                   <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Substituição do atendimento via rádio por servidores centrais dedicados de alta performance conectados à rede nacional do SPC Brasil.
+                    Substituição do atendimento via rádio por servidores
+                    centrais dedicados de alta performance conectados à rede
+                    nacional do SPC Brasil.
                   </p>
                 </div>
                 <div className="border-t border-white/5 pt-4 mt-6">
@@ -632,10 +725,16 @@ export default function HomePage() {
                   <div className="absolute top-8 right-8 text-secondary-brand">
                     <Star className="w-6 h-6 fill-current text-secondary-brand" />
                   </div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand block mb-4">2018</span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">Referência Digital & Convenções</h3>
+                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand block mb-4">
+                    2018
+                  </span>
+                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
+                    Referência Digital & Convenções
+                  </h3>
                   <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Inauguração da moderna sede administrativa contendo auditório completo de convenções e consolidação nacional como uma das maiores emissoras de certificações digitais.
+                    Inauguração da moderna sede administrativa contendo
+                    auditório completo de convenções e consolidação nacional
+                    como uma das maiores emissoras de certificações digitais.
                   </p>
                 </div>
                 <div className="border-t border-secondary-brand/20 pt-4 mt-6">
@@ -655,10 +754,16 @@ export default function HomePage() {
                   <div className="absolute top-8 right-8 text-secondary-brand">
                     <Sparkles className="w-6 h-6 animate-pulse text-secondary-brand" />
                   </div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand block mb-4">2026</span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">55 Anos de Liderança</h3>
+                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand block mb-4">
+                    2026
+                  </span>
+                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
+                    55 Anos de Liderança
+                  </h3>
                   <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Consolidação multissetorial e fomento financeiro acelerado. Hub completo ligando mais de 800 empresas associadas ao fomento estadual e modernização via IA.
+                    Consolidação multissetorial e fomento financeiro acelerado.
+                    Hub completo ligando mais de 800 empresas associadas ao
+                    fomento estadual e modernização via IA.
                   </p>
                 </div>
                 <div className="border-t border-secondary-brand/20 pt-4 mt-6">
@@ -672,9 +777,15 @@ export default function HomePage() {
         </section>
 
         {/* IMAGE GALLERY SECTION */}
-        <section id="galeria" className="py-24 md:py-32 bg-primary-container relative">
+        <section
+          id="galeria"
+          className="py-24 md:py-32 bg-primary-container relative"
+        >
           <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div className="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+            <div
+              className="text-center max-w-2xl mx-auto mb-16"
+              data-aos="fade-up"
+            >
               <span className="text-secondary-brand font-bold text-xs tracking-[0.2em] uppercase mb-3 block">
                 Acervo Visual
               </span>
@@ -682,7 +793,9 @@ export default function HomePage() {
                 Galeria de Imagens
               </h2>
               <p className="text-on-surface-variant text-sm md:text-base">
-                Acompanhe os momentos históricos, reuniões e eventos que ajudaram a pavimentar os 55 anos de progresso do comércio de Cachoeiro de Itapemirim.
+                Acompanhe os momentos históricos, reuniões e eventos que
+                ajudaram a pavimentar os 55 anos de progresso do comércio de
+                Cachoeiro de Itapemirim.
               </p>
             </div>
 
@@ -711,8 +824,9 @@ export default function HomePage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-5">
-                  
-                    <p className="text-white text-sm font-semibold">{img.title}</p>
+                    <p className="text-white text-sm font-semibold">
+                      {img.title}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -721,18 +835,24 @@ export default function HomePage() {
         </section>
 
         {/* CURRENT PRESIDENT FEATURED SECTION */}
-        <section id="presidente" className="py-24 md:py-32 bg-gradient-to-b from-primary-container via-[#00193c] to-[#00193c] relative overflow-hidden">
+        <section
+          id="presidente"
+          className="py-24 md:py-32 bg-gradient-to-b from-primary-container via-[#00193c] to-[#00193c] relative overflow-hidden"
+        >
           {/* Subtle background glow */}
           <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-secondary-brand/5 rounded-full blur-3xl pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               {/* Photo Column - Black and White Portrait */}
-              <div className="lg:col-span-5 order-2 lg:order-1" data-aos="fade-right">
+              <div
+                className="lg:col-span-5 order-2 lg:order-1"
+                data-aos="fade-right"
+              >
                 <div className="relative mx-auto max-w-md lg:max-w-none">
                   {/* Decorative background frame element */}
                   <div className="absolute -inset-2 bg-gradient-to-tr from-secondary-brand/20 via-transparent to-secondary-brand/30 rounded-3xl blur-sm -z-10" />
-                  
+
                   <div className="relative rounded-2xl overflow-hidden border border-secondary-brand/30 bg-[#00193c] shadow-2xl group">
                     <Image
                       src="/img/layout/Celso.png"
@@ -743,15 +863,17 @@ export default function HomePage() {
                       placeholder="blur"
                       blurDataURL={BLUR_PLACEHOLDER}
                       referrerPolicy="no-referrer"
-                      className="w-full h-auto object-cover grayscale contrast-110 group-hover:contrast-100 transition-all duration-700"
+                      className="w-full h-auto object-cover contrast-110 group-hover:contrast-100 transition-all duration-700"
                     />
-                    
+
                     {/* Dark gradient overlay for bottom caption */}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pt-12 flex flex-col justify-end">
                       <span className="text-[10px] font-bold text-secondary-brand uppercase tracking-[0.2em] mb-1">
                         LIDERANÇA & DEDICAÇÃO
                       </span>
-                      <h3 className="font-headline font-black text-2xl text-white">Celso Luiz Costa</h3>
+                      <h3 className="font-headline font-black text-2xl text-white">
+                        Celso Luiz Costa
+                      </h3>
                       <p className="text-xs text-on-surface-variant font-medium">
                         Presidente da CDL Cachoeiro de Itapemirim
                       </p>
@@ -764,15 +886,22 @@ export default function HomePage() {
                       <Award className="w-5 h-5 text-secondary-brand" />
                     </div>
                     <div>
-                      <p className="font-headline font-bold text-sm text-white">+50 Anos</p>
-                      <p className="text-[10px] text-on-surface-variant uppercase font-semibold">Dedicados ao Varejo</p>
+                      <p className="font-headline font-bold text-sm text-white">
+                        +50 Anos
+                      </p>
+                      <p className="text-[10px] text-on-surface-variant uppercase font-semibold">
+                        Dedicados ao Varejo
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Text Column - Comprehensive Story */}
-              <div className="lg:col-span-7 order-1 lg:order-2 space-y-6" data-aos="fade-left">
+              <div
+                className="lg:col-span-7 order-1 lg:order-2 space-y-6"
+                data-aos="fade-left"
+              >
                 <div className="space-y-2">
                   <span className="text-secondary-brand font-bold text-xs tracking-[0.25em] uppercase block">
                     Nosso Presidente
@@ -781,36 +910,64 @@ export default function HomePage() {
                     Presente desde o início da história
                   </h2>
                   <p className="text-secondary-brand/90 font-headline font-bold text-base md:text-lg">
-                    Celso Luiz Costa: Trajetória conectada ao desenvolvimento de Cachoeiro
+                    Celso Luiz Costa: Trajetória conectada ao desenvolvimento de
+                    Cachoeiro
                   </p>
                 </div>
 
                 <div className="space-y-4 text-on-surface-variant font-sans text-xs sm:text-sm md:text-base leading-relaxed">
                   <p>
-                    Quando a Câmara de Dirigentes Lojistas de Cachoeiro de Itapemirim dava seus primeiros passos, em 1971, Celso Luiz Costa, com menos de 20 anos de idade, também começava sua própria trajetória no comércio da cidade.
+                    Quando a Câmara de Dirigentes Lojistas de Cachoeiro de
+                    Itapemirim dava seus primeiros passos, em 1971, Celso Luiz
+                    Costa, com menos de 20 anos de idade, também começava sua
+                    própria trajetória no comércio da cidade.
                   </p>
 
                   <p>
-                    Ele trabalhava como funcionário na empresa da família por um motivo especial: <span className="text-white italic">"Entrei no comércio pela menina mais linda do Liceu (hoje, minha esposa). Eu queria estudar, fazer faculdade, mas também queria ganhar dinheiro para casar. Por isso, comecei a trabalhar na loja do meu pai"</span>, conta Celso.
+                    Ele trabalhava como funcionário na empresa da família por um
+                    motivo especial:{" "}
+                    <span className="text-white italic">
+                      "Entrei no comércio pela menina mais linda do Liceu (hoje,
+                      minha esposa). Eu queria estudar, fazer faculdade, mas
+                      também queria ganhar dinheiro para casar. Por isso,
+                      comecei a trabalhar na loja do meu pai"
+                    </span>
+                    , conta Celso.
                   </p>
 
                   <p>
-                    Naquela época, vender a prazo ainda era baseado apenas na confiança verbal. Não existiam sistemas digitais ou consultas automatizadas. Foi então que Celso conheceu o Serviço de Proteção ao Crédito (SPC), prestes a chegar a Cachoeiro. Ele convenceu seu pai a implementar a novidade, dando início a uma parceria histórica com a CDL.
+                    Naquela época, vender a prazo ainda era baseado apenas na
+                    confiança verbal. Não existiam sistemas digitais ou
+                    consultas automatizadas. Foi então que Celso conheceu o
+                    Serviço de Proteção ao Crédito (SPC), prestes a chegar a
+                    Cachoeiro. Ele convenceu seu pai a implementar a novidade,
+                    dando início a uma parceria histórica com a CDL.
                   </p>
 
                   <p>
-                    Após o sucesso do SPC, Celso tornou-se sócio, expandiu seus negócios e abriu novas filiais. Em 1978, aos 27 anos, assumiu a presidência da CDL pela primeira vez, conquistando a primeira sede própria no Edifício Hércules (Sala 301).
+                    Após o sucesso do SPC, Celso tornou-se sócio, expandiu seus
+                    negócios e abriu novas filiais. Em 1978, aos 27 anos,
+                    assumiu a presidência da CDL pela primeira vez, conquistando
+                    a primeira sede própria no Edifício Hércules (Sala 301).
                   </p>
 
                   <p>
-                    Em 2004, assumiu seu segundo mandato à frente da instituição, onde permanece liderando grandes transformações: a aquisição de todo o 3º pavimento do Edifício Hércules, a criação do Centro de Convenções, a Escola de Varejo no 4º andar e a consolidação da CDL como referência regional e nacional.
+                    Em 2004, assumiu seu segundo mandato à frente da
+                    instituição, onde permanece liderando grandes
+                    transformações: a aquisição de todo o 3º pavimento do
+                    Edifício Hércules, a criação do Centro de Convenções, a
+                    Escola de Varejo no 4º andar e a consolidação da CDL como
+                    referência regional e nacional.
                   </p>
                 </div>
 
                 {/* Highlight Quote Box */}
                 <div className="bg-secondary-brand/10 border-l-4 border-secondary-brand p-5 rounded-r-xl space-y-2 mt-6">
                   <p className="text-white text-xs sm:text-sm italic leading-relaxed">
-                    "Minha maior contribuição por onde passei sempre foi ser otimista e continuo assim. Olho esperançoso para o futuro. Hoje nós estamos no DNA de todo o desenvolvimento, não só do varejo, mas no aspecto geral da sociedade."
+                    "Minha maior contribuição por onde passei sempre foi ser
+                    otimista e continuo assim. Olho esperançoso para o futuro.
+                    Hoje nós estamos no DNA de todo o desenvolvimento, não só do
+                    varejo, mas no aspecto geral da sociedade."
                   </p>
                   <p className="text-right text-[11px] font-bold text-secondary-brand uppercase tracking-wider">
                     — Celso Luiz Costa, Presidente da CDL Cachoeiro
@@ -822,155 +979,67 @@ export default function HomePage() {
         </section>
 
         {/* PRESIDENTS GALLERY SECTION */}
-        <section id="presidentes" className="py-24 md:py-32 bg-gradient-to-b from-[#00193c] to-[#002351] relative">
+        <section
+          id="presidentes"
+          className="py-24 md:py-32 bg-gradient-to-b from-[#00193c] to-[#002351] relative"
+        >
           <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div className="max-w-2xl mx-auto text-center mb-20" data-aos="fade-up">
+            <div
+              className="max-w-2xl mx-auto text-center mb-20"
+              data-aos="fade-up"
+            >
               <span className="text-secondary-brand font-bold text-xs tracking-[0.2em] uppercase mb-3 block">
-                Galeria de Lideranças
+                Nossas Lideranças
               </span>
               <h2 className="font-headline text-3xl md:text-4xl font-black text-white mb-4">
                 Presidentes que Marcaram Época
               </h2>
               <p className="text-on-surface-variant text-sm md:text-base">
-                Homenagem aos voluntários do desenvolvimento econômico que dedicaram suas gestões ao fortalecimento de nossa união corporativa.
+                Homenagem aos voluntários do desenvolvimento econômico que
+                dedicaram suas gestões ao fortalecimento de nossa união
+                corporativa.
               </p>
             </div>
 
-            {/* Presidents Grid with biographies */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-              {/* Carlos Luiz Pinto */}
-              <div
-                className="bg-[#0b132b]/45 border border-white/5 rounded-2xl overflow-hidden p-6 sm:p-8 hover:border-secondary-brand/20 transition-all flex flex-col sm:flex-row gap-6"
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <Image
-                  alt="Carlos Luiz Pinto"
-                  width={160}
-                  height={160}
-                  loading="lazy"
-                  sizes="(max-width: 640px) 128px, 160px"
-                  placeholder="blur"
-                  blurDataURL={BLUR_PLACEHOLDER}
-                  referrerPolicy="no-referrer"
-                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-xl object-cover border border-white/10 shrink-0 mx-auto"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzh1HKML9l1ITfTNGCdP4GDsN1sDQ1KyWqAqUyeMV77UZMQWSCTLyD4i22aUz_qBF4g4JEotmpl_6YDs_bJcts9HOFckXStTc751B6jvAevxxsaj7RY-2dg9zmgSpf78SJfNo7C3wqzEdfDZe_YpAzSXgk_66C68UKk7n9f9nVWB20NN6wyZF7RErUHjk3L2GyVByUorz2AbPJro-DKX7PhBxxq52-7s45wZtojIafzA4m1PdgsinU9qf9p-XDYMgLeohmQzabFpJC"
-                />
-                <div className="space-y-3">
-                  <span className="text-[10px] font-bold text-secondary-brand bg-secondary-brand/10 px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">
-                    GESTÃO 1971 - 1972
-                  </span>
-                  <h3 className="font-headline font-bold text-lg text-white">Carlos Luiz Pinto</h3>
-                  <p className="text-xs text-secondary-brand/85 font-medium leading-relaxed">
-                    Primeiro presidente, liderou a comissão para trazer o SPC.
-                  </p>
-                  <p className="text-xs text-on-surface-variant leading-relaxed">
-                    Empresário visionário e proprietário da tradicional Modas Elite, Carlos Luiz Pinto liderou a primeira comissão de lojistas locais, estabelecendo os pilares que norteiam a CDL Cachoeiro até hoje.
-                  </p>
-                </div>
-              </div>
+            <NossosPresidentes />
+          </div>
+        </section>
 
-              {/* Cezar Missi */}
-              <div
-                className="bg-[#0b132b]/45 border border-white/5 rounded-2xl overflow-hidden p-6 sm:p-8 hover:border-secondary-brand/20 transition-all flex flex-col sm:flex-row gap-6"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <Image
-                  alt="Cezar Missi"
-                  width={160}
-                  height={160}
-                  loading="lazy"
-                  sizes="(max-width: 640px) 128px, 160px"
-                  placeholder="blur"
-                  blurDataURL={BLUR_PLACEHOLDER}
-                  referrerPolicy="no-referrer"
-                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-xl object-cover border border-white/10 shrink-0 mx-auto"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxgVq6MA54eKSAjwFdjSTTmkK73FXH4kzHcDH4h3GF026gixM9HRdVBnlWF7z1Iff-oT-m1K96oS7qmxsRfPHa1Ek53Ppw9CGGkQCUfk_D-2NDihpFox2gf91XojIcTgcQ5qivaYtChBrMLmZjN0ZMGmQK8emPhT4JxpbiNDIE10Mv6pVnzFFp_gJXTUU_b79Ab3lxqjkb0fL-l5r7Bxu5LdRekqQSdQCmcGqlOXmksKIY6rZ4JhR6AWBETxhE9Yxc4_TpQjrWCNZa"
-                />
-                <div className="space-y-3">
-                  <span className="text-[10px] font-bold text-secondary-brand bg-secondary-brand/10 px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">
-                    GESTÃO 1986 - 1988
-                  </span>
-                  <h3 className="font-headline font-bold text-lg text-white">Cezar Missi</h3>
-                  <p className="text-xs text-secondary-brand/85 font-medium leading-relaxed">
-                    Iniciou os estudos para a informatização do banco de dados.
-                  </p>
-                  <p className="text-xs text-on-surface-variant leading-relaxed">
-                    À frente da loja "A Mestiça" — ícone do comércio local operante por mais de 60 anos — Cezar compreendeu cedo que a informatização e automação seriam indispensáveis para acelerar os crediários.
-                  </p>
-                </div>
-              </div>
-
-              {/* João Kléber de Massena */}
-              <div
-                className="bg-[#0b132b]/45 border border-white/5 rounded-2xl overflow-hidden p-6 sm:p-8 hover:border-secondary-brand/20 transition-all flex flex-col sm:flex-row gap-6"
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <Image
-                  alt="João Kléber de Massena"
-                  width={160}
-                  height={160}
-                  loading="lazy"
-                  sizes="(max-width: 640px) 128px, 160px"
-                  placeholder="blur"
-                  blurDataURL={BLUR_PLACEHOLDER}
-                  referrerPolicy="no-referrer"
-                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-xl object-cover border border-white/10 shrink-0 mx-auto"
-                  src="/img/layout/joao_kleber.png"
-                />
-                <div className="space-y-3">
-                  <span className="text-[10px] font-bold text-secondary-brand bg-secondary-brand/10 px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">
-                    GESTÃO 1996 - 2000
-                  </span>
-                  <h3 className="font-headline font-bold text-lg text-white">João Kléber de Massena</h3>
-                  <p className="text-xs text-secondary-brand/85 font-medium leading-relaxed">
-                    Impulsionou o Natal na Praça Jerônimo Monteiro.
-                  </p>
-                  <p className="text-xs text-on-surface-variant leading-relaxed">
-                    João marcou sua gestão pela aproximação com os cidadãos, levando promoções de fim de ano com sorteios de veículos em eventos públicos na praça central, integrando a cidade e o comércio.
-                  </p>
-                </div>
-              </div>
-
-              {/* Celso Luiz Costa */}
-              <div
-                className="bg-[#0b132b]/45 border border-white/5 rounded-2xl overflow-hidden p-6 sm:p-8 hover:border-secondary-brand/20 transition-all flex flex-col sm:flex-row gap-6"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <Image
-                  alt="Celso Luiz Costa"
-                  width={160}
-                  height={160}
-                  loading="lazy"
-                  sizes="(max-width: 640px) 128px, 160px"
-                  placeholder="blur"
-                  blurDataURL={BLUR_PLACEHOLDER}
-                  referrerPolicy="no-referrer"
-                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-xl object-cover border border-white/10 shrink-0 mx-auto"
-                  src="/img/layout/Celso.png"
-                />
-                <div className="space-y-3">
-                  <span className="text-[10px] font-bold text-secondary-brand bg-secondary-brand/10 px-2.5 py-1 rounded-full uppercase tracking-wider inline-block">
-                    GESTÃO ATUAL
-                  </span>
-                  <h3 className="font-headline font-bold text-lg text-white">Celso Luiz Costa</h3>
-                  <p className="text-xs text-secondary-brand/85 font-medium leading-relaxed">
-                    Liderou a grande expansão e ergueu o Centro de Convenções.
-                  </p>
-                  <p className="text-xs text-on-surface-variant leading-relaxed">
-                    Focado em inovação, Celso ergueu a sede atual com auditório de convenções moderno, expandiu o catálogo de soluções tecnológicas e consolidou a representatividade da CDL estadualmente.
-                  </p>
-                </div>
-              </div>
+        {/* CURRENT BOARD OF DIRECTORS SECTION */}
+        <section
+          id="AtualDiretoria"
+          className="py-24 md:py-32 bg-gradient-to-b from-[#00193c] to-[#002351] relative"
+        >
+          <div className="flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-12">
+            <div
+              className="max-w-2xl mx-auto text-center mb-20"
+              data-aos="fade-up"
+            >
+              <span className="text-secondary-brand font-bold text-xs tracking-[0.2em] uppercase mb-3 block">
+                Nosso Corpo Diretor
+              </span>
+              <h2 className="font-headline text-3xl md:text-4xl font-black text-white mb-4">
+                Atual Diretoria da CDL Cachoeiro
+              </h2>
             </div>
+            <AtualDiretoria />
+
+            <Link
+              href="https://drive.google.com/drive/folders/1nuL8KMkVMsXqUiAlTih3Ha8lSOi8hyzt?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex text-center m-auto justify-center items-center mt-12 inline-block bg-secondary-brand text-primary-container font-bold text-sm md:text-base px-6 py-3 rounded-lg hover:bg-secondary-brand/90 transition-all"
+            >
+              Confira as Fotos
+            </Link>
           </div>
         </section>
 
         {/* SERVICES / SOLUTIONS SECTION */}
-        <section id="servicos" className="py-24 md:py-32 bg-primary-container relative">
+        <section
+          id="servicos"
+          className="py-24 md:py-32 bg-primary-container relative"
+        >
           {/* Visual background pattern */}
           <div className="absolute bottom-0 left-0 w-full h-32 opacity-5 pointer-events-none">
             <Image
@@ -991,7 +1060,9 @@ export default function HomePage() {
                 Muito além do crédito
               </h2>
               <p className="text-on-surface-variant text-sm md:text-base">
-                Oferecemos um portfólio tecnológico completo voltado ao desenvolvimento empresarial de Cachoeiro, mitigando riscos e simplificando rotinas de faturamento.
+                Oferecemos um portfólio tecnológico completo voltado ao
+                desenvolvimento empresarial de Cachoeiro, mitigando riscos e
+                simplificando rotinas de faturamento.
               </p>
             </div>
 
@@ -1007,9 +1078,13 @@ export default function HomePage() {
                   <div className="w-14 h-14 bg-white/5 rounded-lg flex items-center justify-center mb-6 group-hover:scale-105 transition-transform border border-white/5 text-secondary-brand">
                     <Shield className="w-7 h-7 text-secondary-brand" />
                   </div>
-                  <h3 className="font-headline font-bold text-xl text-white mb-3">SPC & Inteligência</h3>
+                  <h3 className="font-headline font-bold text-xl text-white mb-3">
+                    SPC & Inteligência
+                  </h3>
                   <p className="font-sans text-xs md:text-sm text-on-surface-variant leading-relaxed mb-6">
-                    Consultas ao SPC Brasil e Serasa, monitoramento contínuo SPC Avisa e profunda análise de risco para concessões de crédito com segurança cirúrgica.
+                    Consultas ao SPC Brasil e Serasa, monitoramento contínuo SPC
+                    Avisa e profunda análise de risco para concessões de crédito
+                    com segurança cirúrgica.
                   </p>
                 </div>
 
@@ -1019,7 +1094,11 @@ export default function HomePage() {
                     onClick={() => toggleAccordion("spc")}
                     className="accordion-btn flex items-center gap-2 text-xs font-bold text-secondary-brand mb-4 hover:underline cursor-pointer"
                   >
-                    <span>{accordions.spc ? "Ocultar benefícios" : "Ver benefícios específicos"}</span>
+                    <span>
+                      {accordions.spc
+                        ? "Ocultar benefícios"
+                        : "Ver benefícios específicos"}
+                    </span>
                     <ChevronDown
                       className={`w-3.5 h-3.5 transition-transform duration-300 ${accordions.spc ? "rotate-180" : "rotate-0"}`}
                     />
@@ -1033,7 +1112,9 @@ export default function HomePage() {
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
-                        <span>Monitoramento SPC Avisa (Alertas em tempo real)</span>
+                        <span>
+                          Monitoramento SPC Avisa (Alertas em tempo real)
+                        </span>
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
@@ -1047,8 +1128,12 @@ export default function HomePage() {
                   )}
 
                   <div className="border-t border-white/5 pt-4">
-                    <span className="text-[10px] text-white/40 block">SERVIÇO INTEGRADO</span>
-                    <span className="text-xs font-semibold text-white/95">CDL Cachoeiro</span>
+                    <span className="text-[10px] text-white/40 block">
+                      SERVIÇO INTEGRADO
+                    </span>
+                    <span className="text-xs font-semibold text-white/95">
+                      CDL Cachoeiro
+                    </span>
                   </div>
                 </div>
               </div>
@@ -1063,9 +1148,13 @@ export default function HomePage() {
                   <div className="w-14 h-14 bg-white/5 rounded-lg flex items-center justify-center mb-6 group-hover:scale-105 transition-transform border border-white/5 text-secondary-brand">
                     <Award className="w-7 h-7 text-secondary-brand" />
                   </div>
-                  <h3 className="font-headline font-bold text-xl text-white mb-3">Protagonismo Digital</h3>
+                  <h3 className="font-headline font-bold text-xl text-white mb-3">
+                    Protagonismo Digital
+                  </h3>
                   <p className="font-sans text-xs md:text-sm text-on-surface-variant leading-relaxed mb-6">
-                    Líder regional e referência no Espírito Santo em Certificação Digital, ocupando o 5º lugar nacional em emissões seguras pelo sistema SPC Brasil.
+                    Líder regional e referência no Espírito Santo em
+                    Certificação Digital, ocupando o 5º lugar nacional em
+                    emissões seguras pelo sistema SPC Brasil.
                   </p>
                 </div>
 
@@ -1075,7 +1164,11 @@ export default function HomePage() {
                     onClick={() => toggleAccordion("digital")}
                     className="accordion-btn flex items-center gap-2 text-xs font-bold text-secondary-brand mb-4 hover:underline cursor-pointer"
                   >
-                    <span>{accordions.digital ? "Ocultar benefícios" : "Ver benefícios específicos"}</span>
+                    <span>
+                      {accordions.digital
+                        ? "Ocultar benefícios"
+                        : "Ver benefícios específicos"}
+                    </span>
                     <ChevronDown
                       className={`w-3.5 h-3.5 transition-transform duration-300 ${accordions.digital ? "rotate-180" : "rotate-0"}`}
                     />
@@ -1089,7 +1182,10 @@ export default function HomePage() {
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
-                        <span>Emissão Presencial na Sede ou Remota por videoconferência</span>
+                        <span>
+                          Emissão Presencial na Sede ou Remota por
+                          videoconferência
+                        </span>
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
@@ -1097,14 +1193,20 @@ export default function HomePage() {
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
-                        <span>Validade e Segurança Jurídica nacional garantida</span>
+                        <span>
+                          Validade e Segurança Jurídica nacional garantida
+                        </span>
                       </li>
                     </ul>
                   )}
 
                   <div className="border-t border-white/5 pt-4">
-                    <span className="text-[10px] text-white/40 block">SERVIÇO INTEGRADO</span>
-                    <span className="text-xs font-semibold text-white/95">CDL Cachoeiro</span>
+                    <span className="text-[10px] text-white/40 block">
+                      SERVIÇO INTEGRADO
+                    </span>
+                    <span className="text-xs font-semibold text-white/95">
+                      CDL Cachoeiro
+                    </span>
                   </div>
                 </div>
               </div>
@@ -1119,9 +1221,13 @@ export default function HomePage() {
                   <div className="w-14 h-14 bg-white/5 rounded-lg flex items-center justify-center mb-6 group-hover:scale-105 transition-transform border border-white/5 text-secondary-brand">
                     <Building className="w-7 h-7 text-secondary-brand" />
                   </div>
-                  <h3 className="font-headline font-bold text-xl text-white mb-3">Estrutura & Parcerias</h3>
+                  <h3 className="font-headline font-bold text-xl text-white mb-3">
+                    Estrutura & Parcerias
+                  </h3>
                   <p className="font-sans text-xs md:text-sm text-on-surface-variant leading-relaxed mb-6">
-                    Centro de Convenções próprio altamente equipado para capacitações e fomento financeiro acelerado em parceria direta como correspondente BANDES.
+                    Centro de Convenções próprio altamente equipado para
+                    capacitações e fomento financeiro acelerado em parceria
+                    direta como correspondente BANDES.
                   </p>
                 </div>
 
@@ -1131,7 +1237,11 @@ export default function HomePage() {
                     onClick={() => toggleAccordion("structure")}
                     className="accordion-btn flex items-center gap-2 text-xs font-bold text-secondary-brand mb-4 hover:underline cursor-pointer"
                   >
-                    <span>{accordions.structure ? "Ocultar benefícios" : "Ver benefícios específicos"}</span>
+                    <span>
+                      {accordions.structure
+                        ? "Ocultar benefícios"
+                        : "Ver benefícios específicos"}
+                    </span>
                     <ChevronDown
                       className={`w-3.5 h-3.5 transition-transform duration-300 ${accordions.structure ? "rotate-180" : "rotate-0"}`}
                     />
@@ -1141,15 +1251,21 @@ export default function HomePage() {
                     <ul className="space-y-2.5 mb-6 border-t border-white/5 pt-4 animate-in fade-in duration-200">
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
-                        <span>Centro de Convenções Multiuso com som e projeção</span>
+                        <span>
+                          Centro de Convenções Multiuso com som e projeção
+                        </span>
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
-                        <span>Correspondente oficial BANDES (Microcrédito)</span>
+                        <span>
+                          Correspondente oficial BANDES (Microcrédito)
+                        </span>
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
-                        <span>Salas de treinamento para equipes associadas</span>
+                        <span>
+                          Salas de treinamento para equipes associadas
+                        </span>
                       </li>
                       <li className="flex items-start gap-2.5 text-xs text-on-background/95">
                         <CheckCircle2 className="w-3.5 h-3.5 text-secondary-brand mt-0.5 shrink-0" />
@@ -1159,8 +1275,12 @@ export default function HomePage() {
                   )}
 
                   <div className="border-t border-white/5 pt-4">
-                    <span className="text-[10px] text-white/40 block">SERVIÇO INTEGRADO</span>
-                    <span className="text-xs font-semibold text-white/95">CDL Cachoeiro</span>
+                    <span className="text-[10px] text-white/40 block">
+                      SERVIÇO INTEGRADO
+                    </span>
+                    <span className="text-xs font-semibold text-white/95">
+                      CDL Cachoeiro
+                    </span>
                   </div>
                 </div>
               </div>
@@ -1175,7 +1295,10 @@ export default function HomePage() {
             COLETIVO
           </span>
 
-          <div className="max-w-4xl mx-auto px-6 relative z-10" data-aos="fade-up">
+          <div
+            className="max-w-4xl mx-auto px-6 relative z-10"
+            data-aos="fade-up"
+          >
             <span className="text-[#884f00] font-bold text-xs tracking-[0.2em] uppercase mb-4 block">
               PENSANDO NO AMANHÃ
             </span>
@@ -1187,7 +1310,10 @@ export default function HomePage() {
               </span>
             </h2>
             <p className="font-sans text-sm md:text-lg max-w-2xl mx-auto mb-12 text-[#2d1b00]/80 leading-relaxed">
-              Há 55 anos, acreditamos que o sucesso de um comerciante é o progresso de toda a nossa comunidade. O futuro nos aguarda com novos desafios digitais, e a CDL Cachoeiro estará lá, apoiando sua empresa.
+              Há 55 anos, acreditamos que o sucesso de um comerciante é o
+              progresso de toda a nossa comunidade. O futuro nos aguarda com
+              novos desafios digitais, e a CDL Cachoeiro estará lá, apoiando sua
+              empresa.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -1212,7 +1338,9 @@ export default function HomePage() {
             {/* Jubilee Medallion Icon */}
             <div className="mt-16 flex justify-center">
               <div className="w-20 h-20 rounded-full border border-secondary-container/30 bg-secondary-container/5 flex items-center justify-center shadow-inner">
-                <span className="font-headline font-black text-secondary-container text-2xl">55</span>
+                <span className="font-headline font-black text-secondary-container text-2xl">
+                  55
+                </span>
               </div>
             </div>
           </div>
@@ -1225,36 +1353,55 @@ export default function HomePage() {
           {/* Logo Brand */}
           <div>
             <div className="font-headline text-lg md:text-xl font-black text-white flex items-center gap-3">
-              <img
-                src="/img/cdlcachoeiro.svg"
+              <Image
+                src="/img/layout/cdlcachoeiro.png"
                 alt="CDL Cachoeiro 55 Anos"
-                className="h-10 w-auto"
+                width={160}
+                height={48}
+                className="h-12 w-auto object-contain"
+                referrerPolicy="no-referrer"
+                priority
               />
-              <span className="text-sm font-extrabold text-white">CDL CACHOEIRO 55 ANOS</span>
             </div>
           </div>
 
           {/* Navigation links */}
           <div className="flex gap-6 md:gap-8 text-xs font-semibold text-on-surface-variant">
-            <a href="#historia" className="hover:text-secondary-brand transition-colors">
+            <a
+              href="#historia"
+              className="hover:text-secondary-brand transition-colors"
+            >
               História
             </a>
-            <a href="#manifesto" className="hover:text-secondary-brand transition-colors">
+            <a
+              href="#manifesto"
+              className="hover:text-secondary-brand transition-colors"
+            >
               Manifesto
             </a>
-            <a href="#galeria" className="hover:text-secondary-brand transition-colors">
+            <a
+              href="#galeria"
+              className="hover:text-secondary-brand transition-colors"
+            >
               Galeria
             </a>
-            <a href="#servicos" className="hover:text-secondary-brand transition-colors">
+            <a
+              href="#servicos"
+              className="hover:text-secondary-brand transition-colors"
+            >
               Serviços
             </a>
           </div>
 
           {/* Copyright */}
           <p className="text-xs text-on-surface-variant text-center md:text-right">
-            © 2026 CDL Cachoeiro. 55 anos impulsionando o desenvolvimento regional.
+            © 2026 CDL Cachoeiro. 55 anos impulsionando o desenvolvimento
+            regional.
           </p>
         </div>
+        <p className="text-xs text-on-surface-variant text-center md:text-center">
+            Textos - <span className="font-semibold">Bruna Hermely</span>
+          </p>
       </footer>
 
       {/* INTERACTIVE OVERLAYS & MODALS */}
@@ -1279,21 +1426,16 @@ export default function HomePage() {
                 <h3 className="text-white font-headline font-bold text-base leading-none">
                   55 Anos CDL Cachoeiro
                 </h3>
-                
               </div>
             </div>
 
             {/* Actual HTML5 video container */}
             <div className="bg-black relative aspect-video w-full">
               <iframe
-              src="https://drive.google.com/file/d/1bGn3f06HEVYS0zq4v6BHEhN_sOW8DcgI/preview"
-                
+                src="https://drive.google.com/file/d/1bGn3f06HEVYS0zq4v6BHEhN_sOW8DcgI/preview"
                 className="w-full h-full object-contain"
                 allow="autoplay; fullscreen"
-                
-              >
-                
-              </iframe>
+              ></iframe>
             </div>
           </div>
         </div>
@@ -1322,9 +1464,12 @@ export default function HomePage() {
               <span className="text-secondary-brand font-bold text-[10px] tracking-widest block uppercase mb-1">
                 Cresça Conosco
               </span>
-              <h3 className="font-headline font-black text-2xl text-white">Solicitar Associação</h3>
+              <h3 className="font-headline font-black text-2xl text-white">
+                Solicitar Associação
+              </h3>
               <p className="text-xs text-on-surface-variant mt-1">
-                Preencha os dados e entraremos em contato rapidamente para oficializar sua entrada.
+                Preencha os dados e entraremos em contato rapidamente para
+                oficializar sua entrada.
               </p>
             </div>
 
@@ -1334,7 +1479,10 @@ export default function HomePage() {
                 /* Submission Form */
                 <form onSubmit={handleAssociationSubmit} className="space-y-4">
                   <div>
-                    <label htmlFor="company-name" className="block text-xs font-semibold text-white/95 mb-1.5">
+                    <label
+                      htmlFor="company-name"
+                      className="block text-xs font-semibold text-white/95 mb-1.5"
+                    >
                       Razão Social / Nome da Empresa *
                     </label>
                     <input
@@ -1350,7 +1498,10 @@ export default function HomePage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="cnpj" className="block text-xs font-semibold text-white/95 mb-1.5">
+                      <label
+                        htmlFor="cnpj"
+                        className="block text-xs font-semibold text-white/95 mb-1.5"
+                      >
                         CNPJ *
                       </label>
                       <input
@@ -1364,7 +1515,10 @@ export default function HomePage() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="phone" className="block text-xs font-semibold text-white/95 mb-1.5">
+                      <label
+                        htmlFor="phone"
+                        className="block text-xs font-semibold text-white/95 mb-1.5"
+                      >
                         Telefone de Contato *
                       </label>
                       <input
@@ -1380,7 +1534,10 @@ export default function HomePage() {
                   </div>
 
                   <div>
-                    <label htmlFor="owner-name" className="block text-xs font-semibold text-white/95 mb-1.5">
+                    <label
+                      htmlFor="owner-name"
+                      className="block text-xs font-semibold text-white/95 mb-1.5"
+                    >
                       Nome do Proprietário / Responsável *
                     </label>
                     <input
@@ -1395,7 +1552,10 @@ export default function HomePage() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-xs font-semibold text-white/95 mb-1.5">
+                    <label
+                      htmlFor="email"
+                      className="block text-xs font-semibold text-white/95 mb-1.5"
+                    >
                       E-mail Corporativo *
                     </label>
                     <input
@@ -1423,9 +1583,14 @@ export default function HomePage() {
                     <CheckCircle2 className="w-10 h-10 text-secondary-brand" />
                   </div>
                   <div className="space-y-1.5">
-                    <h4 className="font-headline font-bold text-xl text-white">Solicitação Recebida!</h4>
+                    <h4 className="font-headline font-bold text-xl text-white">
+                      Solicitação Recebida!
+                    </h4>
                     <p className="text-xs text-on-surface-variant px-2 leading-relaxed">
-                      Excelente! Os dados da sua empresa foram encaminhados com sucesso ao nosso departamento de novos associados. Em poucas horas, um de nossos especialistas entrará em contato via WhatsApp ou e-mail.
+                      Excelente! Os dados da sua empresa foram encaminhados com
+                      sucesso ao nosso departamento de novos associados. Em
+                      poucas horas, um de nossos especialistas entrará em
+                      contato via WhatsApp ou e-mail.
                     </p>
                   </div>
                   <button
@@ -1467,7 +1632,10 @@ export default function HomePage() {
             {/* Prev Button */}
             <button
               onClick={() =>
-                setCurrentImgIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)
+                setCurrentImgIndex(
+                  (prev) =>
+                    (prev - 1 + galleryImages.length) % galleryImages.length,
+                )
               }
               className="absolute left-4 bg-white/5 hover:bg-secondary-brand hover:text-primary-container text-white p-3 rounded-full border border-white/10 transition-all cursor-pointer"
             >

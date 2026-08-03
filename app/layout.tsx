@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
-import "aos/dist/aos.css";
 
 export const metadata: Metadata = {
   title: "CDL Cachoeiro - 55 Anos",
