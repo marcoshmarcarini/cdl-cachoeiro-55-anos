@@ -25,6 +25,7 @@ import {
 import NossosPresidentes from "./components/NossosPresidentes";
 import AtualDiretoria from "./components/AtualDiretoria";
 import Link from "next/link";
+import LinksEvento from "./components/LinksEvento";
 
 interface LeadSubmission {
   companyName: string;
@@ -271,21 +272,26 @@ export default function HomePage() {
               Presidentes
             </a>
             <a
+              href="#festa55anos"
+              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
+            >
+              Festa 55 anos
+            </a>
+            <a
               href="#servicos"
               className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
             >
               Serviços
             </a>
 
-            <button
-              onClick={() => {
-                setFormSubmitted(false);
-                setContactModalOpen(true);
-              }}
+            <Link
+              href="https://api.whatsapp.com/send?phone=5528998867193&text=Ol%C3%A1%2C%20gostaria%20de%20me%20associar%20%C3%A0%20CDL%20Cachoeiro."
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-secondary-brand hover:bg-secondary-brand/90 text-primary-container font-extrabold text-sm px-6 py-2.5 rounded-lg hover:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-secondary-brand/15"
             >
               Seja Associado
-            </button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Toggle Button */}
@@ -471,7 +477,7 @@ export default function HomePage() {
                   <p>
                     Não somos apenas um banco de dados de proteção ao crédito.
                     Somos a união de voluntários, lojistas, prestadores de
-                    serviços e industriais de Cachoeiro de Itapemirim que
+                    serviços e indústrias de Cachoeiro de Itapemirim que
                     decidiram escrever o destino econômico de nossa região.
                   </p>
                   <p className="border-l-2 border-secondary-brand pl-4 italic text-white/90">
@@ -1023,15 +1029,7 @@ export default function HomePage() {
               </h2>
             </div>
             <AtualDiretoria />
-
-            <Link
-              href="https://drive.google.com/drive/folders/1nuL8KMkVMsXqUiAlTih3Ha8lSOi8hyzt?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex text-center m-auto justify-center items-center mt-12 inline-block bg-secondary-brand text-primary-container font-bold text-sm md:text-base px-6 py-3 rounded-lg hover:bg-secondary-brand/90 transition-all"
-            >
-              Confira as Fotos
-            </Link>
+            <LinksEvento />
           </div>
         </section>
 
@@ -1317,32 +1315,25 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <button
-                onClick={() => {
-                  setFormSubmitted(false);
-                  setContactModalOpen(true);
-                }}
+              <Link
+                href="https://api.whatsapp.com/send?phone=5528998867193&text=Ol%C3%A1%2C%20gostaria%20de%20me%20associar%20%C3%A0%20CDL%20Cachoeiro."
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-[#db7f00] hover:bg-[#c26e00] text-white font-extrabold px-8 py-3.5 rounded-lg text-sm transition-all cursor-pointer shadow-lg shadow-[#db7f00]/20 flex items-center justify-center gap-1.5"
               >
                 Quero me Associar Hoje
                 <ArrowRight className="w-4 h-4" />
-              </button>
-              <a
-                href="#servicos"
-                className="w-full sm:w-auto border border-primary-container/30 hover:bg-primary-container/5 text-primary-container font-bold px-8 py-3.5 rounded-lg text-sm transition-all flex items-center justify-center"
-              >
-                Explorar Soluções
-              </a>
+              </Link>
             </div>
 
             {/* Jubilee Medallion Icon */}
-            <div className="mt-16 flex justify-center">
+            {/* <div className="mt-16 flex justify-center">
               <div className="w-20 h-20 rounded-full border border-secondary-container/30 bg-secondary-container/5 flex items-center justify-center shadow-inner">
                 <span className="font-headline font-black text-secondary-container text-2xl">
                   55
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
       </main>
@@ -1400,8 +1391,11 @@ export default function HomePage() {
           </p>
         </div>
         <p className="text-xs text-on-surface-variant text-center md:text-center">
-            Textos - <span className="font-semibold">Bruna Hermely</span>
-          </p>
+          Site desenvolvido por{" "}
+          <Link href="https://comconteudo.com.br" className="font-semibold">
+            Agência Conteúdo
+          </Link>
+        </p>
       </footer>
 
       {/* INTERACTIVE OVERLAYS & MODALS */}
@@ -1472,136 +1466,6 @@ export default function HomePage() {
                 oficializar sua entrada.
               </p>
             </div>
-
-            {/* Form and Success Container */}
-            <div className="p-6 md:p-8 overflow-y-auto">
-              {!formSubmitted ? (
-                /* Submission Form */
-                <form onSubmit={handleAssociationSubmit} className="space-y-4">
-                  <div>
-                    <label
-                      htmlFor="company-name"
-                      className="block text-xs font-semibold text-white/95 mb-1.5"
-                    >
-                      Razão Social / Nome da Empresa *
-                    </label>
-                    <input
-                      type="text"
-                      id="company-name"
-                      required
-                      placeholder="Ex: Comercial Cachoeiro Ltda"
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      className="w-full bg-black/20 border border-white/10 focus:border-secondary-brand rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="cnpj"
-                        className="block text-xs font-semibold text-white/95 mb-1.5"
-                      >
-                        CNPJ *
-                      </label>
-                      <input
-                        type="text"
-                        id="cnpj"
-                        required
-                        placeholder="00.000.000/0000-00"
-                        value={cnpj}
-                        onChange={(e) => setCnpj(e.target.value)}
-                        className="w-full bg-black/20 border border-white/10 focus:border-secondary-brand rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="block text-xs font-semibold text-white/95 mb-1.5"
-                      >
-                        Telefone de Contato *
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        required
-                        placeholder="(28) 99999-9999"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="w-full bg-black/20 border border-white/10 focus:border-secondary-brand rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="owner-name"
-                      className="block text-xs font-semibold text-white/95 mb-1.5"
-                    >
-                      Nome do Proprietário / Responsável *
-                    </label>
-                    <input
-                      type="text"
-                      id="owner-name"
-                      required
-                      placeholder="Ex: Carlos Silva"
-                      value={ownerName}
-                      onChange={(e) => setOwnerName(e.target.value)}
-                      className="w-full bg-black/20 border border-white/10 focus:border-secondary-brand rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-xs font-semibold text-white/95 mb-1.5"
-                    >
-                      E-mail Corporativo *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      required
-                      placeholder="Ex: contato@empresa.com.br"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-black/20 border border-white/10 focus:border-secondary-brand rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-secondary-brand hover:bg-secondary-brand/90 text-primary-container font-black py-3 rounded-lg text-sm tracking-wide hover:scale-[0.99] transition-all cursor-pointer mt-4"
-                  >
-                    Enviar Solicitação de Adesão
-                  </button>
-                </form>
-              ) : (
-                /* Success Alert Card */
-                <div className="text-center py-6 space-y-4">
-                  <div className="w-16 h-16 bg-secondary-brand/10 border-2 border-secondary-brand/40 rounded-full flex items-center justify-center mx-auto text-secondary-brand">
-                    <CheckCircle2 className="w-10 h-10 text-secondary-brand" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <h4 className="font-headline font-bold text-xl text-white">
-                      Solicitação Recebida!
-                    </h4>
-                    <p className="text-xs text-on-surface-variant px-2 leading-relaxed">
-                      Excelente! Os dados da sua empresa foram encaminhados com
-                      sucesso ao nosso departamento de novos associados. Em
-                      poucas horas, um de nossos especialistas entrará em
-                      contato via WhatsApp ou e-mail.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setContactModalOpen(false)}
-                    className="border border-white/10 hover:bg-white/5 text-white text-xs font-semibold px-6 py-2.5 rounded-lg cursor-pointer transition-all"
-                  >
-                    Fechar Janela
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       )}
@@ -1664,16 +1528,6 @@ export default function HomePage() {
               <ChevronRight className="w-6 h-6" />
             </button>
           </div>
-
-          {/* Lightbox Caption Footer */}
-          {/* <div className="p-6 text-center max-w-xl mx-auto z-10 bg-black/30 backdrop-blur-sm rounded-xl mb-4 border border-white/5">
-            <p className="text-white font-headline text-base font-bold">
-              {galleryImages[currentImgIndex].caption}
-            </p>
-            <p className="text-secondary-brand text-xs font-semibold tracking-wider mt-1 uppercase">
-              {galleryImages[currentImgIndex].category}
-            </p>
-          </div> */}
         </div>
       )}
 
