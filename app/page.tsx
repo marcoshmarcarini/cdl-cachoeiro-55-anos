@@ -22,8 +22,8 @@ import {
   Film,
   ChevronUp,
 } from "lucide-react";
-import NossosPresidentes from "./components/NossosPresidentes";
-import AtualDiretoria from "./components/AtualDiretoria";
+import NossosPresidentes from "./components/Home/NossosPresidentes";
+import AtualDiretoria from "./components/Home/AtualDiretoria";
 import Link from "next/link";
 import LinksEvento from "./components/Home/LinksEvento";
 import Header from "./components/theme/Header";

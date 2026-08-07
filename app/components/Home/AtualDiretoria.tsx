@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { DIRETORIA, CONSELHO } from "../data/cdlData";
+import { DIRETORIA, CONSELHO } from "../../data/cdlData";
 
 const BLUR_PLACEHOLDER =
   "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwMDE5M2MiLz48L3N2Zz4=";

@@ -72,6 +72,19 @@ export default function LinksEvento() {
         data-aos="fade-up"
         data-aos-delay="300"
       ></iframe>
+      <iframe
+        width="896"
+        height="500"
+        src="https://www.youtube.com/embed/f88THs0NPKQ?si=CRlU8joI8HEOlVJF"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        className="mt-15 video-placeholder-container relative aspect-video w-full max-w-4xl rounded-2xl overflow-hidden group cursor-pointer transition-all hover:scale-[1.01] hover:border-secondary-brand/60"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      ></iframe>
     </div>
   );
 }
