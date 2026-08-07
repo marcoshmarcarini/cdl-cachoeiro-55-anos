@@ -25,16 +25,12 @@ import {
 import NossosPresidentes from "./components/NossosPresidentes";
 import AtualDiretoria from "./components/AtualDiretoria";
 import Link from "next/link";
-import LinksEvento from "./components/LinksEvento";
-
-interface LeadSubmission {
-  companyName: string;
-  cnpj: string;
-  phone: string;
-  ownerName: string;
-  email: string;
-  submittedAt: string;
-}
+import LinksEvento from "./components/Home/LinksEvento";
+import Header from "./components/theme/Header";
+import Footer from "./components/theme/Footer";
+import Timeline from "./components/Home/Timeline";
+import Video from "./components/Home/Video";
+import Galeria from "./components/Home/Galeria";
 
 const BLUR_PLACEHOLDER =
   "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDUiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjUiIGZpbGw9IiMwMDE5M2MiLz48L3N2Zz4=";
@@ -75,12 +71,8 @@ export default function HomePage() {
   }, []);
 
   // Navigation & Modals State
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
   // Accordion toggle states
   const [accordions, setAccordions] = useState<{ [key: string]: boolean }>({
@@ -92,15 +84,7 @@ export default function HomePage() {
   // Scroll to top button visibility
   const [scrollTopVisible, setScrollTopVisible] = useState(false);
 
-  // Form input states
-  const [companyName, setCompanyName] = useState("");
-  const [cnpj, setCnpj] = useState("");
-  const [phone, setPhone] = useState("");
-  const [ownerName, setOwnerName] = useState("");
-  const [email, setEmail] = useState("");
-
   // Refs
-  const timelineRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -135,54 +119,13 @@ export default function HomePage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setContactModalOpen(false);
         setVideoModalOpen(false);
-        setLightboxOpen(false);
-      }
-      if (lightboxOpen) {
-        if (e.key === "ArrowLeft") {
-          setCurrentImgIndex(
-            (prev) => (prev - 1 + galleryImages.length) % galleryImages.length,
-          );
-        }
-        if (e.key === "ArrowRight") {
-          setCurrentImgIndex((prev) => (prev + 1) % galleryImages.length);
-        }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [lightboxOpen]);
-
-  // Handle Form Submit
-  const handleAssociationSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newSubmission: LeadSubmission = {
-      companyName,
-      cnpj,
-      phone,
-      ownerName,
-      email,
-      submittedAt: new Date().toISOString(),
-    };
-
-    try {
-      const existingRaw = localStorage.getItem("cdl_submissions");
-      const existingList = existingRaw ? JSON.parse(existingRaw) : [];
-      existingList.push(newSubmission);
-      localStorage.setItem("cdl_submissions", JSON.stringify(existingList));
-    } catch (err) {
-      console.error("Erro salvando submissão:", err);
-    }
-
-    setFormSubmitted(true);
-    setCompanyName("");
-    setCnpj("");
-    setPhone("");
-    setOwnerName("");
-    setEmail("");
-  };
+  }, []);
 
   // Toggle Accordion function
   const toggleAccordion = (key: string) => {
@@ -194,12 +137,6 @@ export default function HomePage() {
   };
 
   // Timeline Carousel Scroll handlers
-  const scrollTimeline = (direction: "left" | "right") => {
-    if (timelineRef.current) {
-      const scrollAmount = direction === "left" ? -340 : 340;
-      timelineRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
 
   // Open Video Handler
   const openVideo = () => {
@@ -224,156 +161,14 @@ export default function HomePage() {
   return (
     <div className="bg-primary-container text-on-background min-h-screen relative flex flex-col justify-between selection:bg-secondary-brand selection:text-primary-container antialiased font-sans">
       {/* HEADER & NAVBAR */}
-      <header className="fixed top-0 left-0 w-full z-40 bg-primary-container/85 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex justify-between items-center">
-          {/* Logo Brand */}
-          <a href="#" className="flex items-center gap-3">
-            <Image
-              src="/img/layout/cdlcachoeiro.png"
-              alt="CDL Cachoeiro 55 Anos"
-              width={160}
-              height={48}
-              className="h-12 w-auto object-contain"
-              referrerPolicy="no-referrer"
-              priority
-            />
-          </a>
-
-          {/* Desktop Navigation Menu */}
-          <nav className="hidden lg:flex items-center gap-8">
-            <a
-              href="#historia"
-              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
-            >
-              História
-            </a>
-            <a
-              href="#manifesto"
-              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
-            >
-              Manifesto
-            </a>
-            <a
-              href="#galeria"
-              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
-            >
-              Galeria
-            </a>
-            <a
-              href="#presidente"
-              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
-            >
-              Nosso Presidente
-            </a>
-            <a
-              href="#presidentes"
-              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
-            >
-              Presidentes
-            </a>
-            <a
-              href="#festa55anos"
-              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
-            >
-              Festa 55 anos
-            </a>
-            <a
-              href="#servicos"
-              className="text-on-background/85 hover:text-secondary-brand transition-colors text-sm font-medium"
-            >
-              Serviços
-            </a>
-
-            <Link
-              href="https://api.whatsapp.com/send?phone=5528998867193&text=Ol%C3%A1%2C%20gostaria%20de%20me%20associar%20%C3%A0%20CDL%20Cachoeiro."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-secondary-brand hover:bg-secondary-brand/90 text-primary-container font-extrabold text-sm px-6 py-2.5 rounded-lg hover:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-secondary-brand/15"
-            >
-              Seja Associado
-            </Link>
-          </nav>
-
-          {/* Mobile Menu Toggle Button */}
-          <div className="flex lg:hidden items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-on-background hover:text-secondary-brand transition-colors p-2"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown Navigation */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-primary-container border-b border-white/10 px-6 py-6 space-y-4">
-            <div className="flex flex-col gap-4">
-              <a
-                href="#historia"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-on-background/90 hover:text-secondary-brand transition-colors text-base font-medium"
-              >
-                História
-              </a>
-              <a
-                href="#manifesto"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-on-background/90 hover:text-secondary-brand transition-colors text-base font-medium"
-              >
-                Manifesto
-              </a>
-              <a
-                href="#galeria"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-on-background/90 hover:text-secondary-brand transition-colors text-base font-medium"
-              >
-                Galeria
-              </a>
-              <a
-                href="#presidente"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-on-background/90 hover:text-secondary-brand transition-colors text-base font-medium"
-              >
-                Nosso Presidente
-              </a>
-              <a
-                href="#presidentes"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-on-background/90 hover:text-secondary-brand transition-colors text-base font-medium"
-              >
-                Presidentes
-              </a>
-              <a
-                href="#servicos"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-on-background/90 hover:text-secondary-brand transition-colors text-base font-medium"
-              >
-                Serviços
-              </a>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setFormSubmitted(false);
-                  setContactModalOpen(true);
-                }}
-                className="w-full bg-secondary-brand hover:bg-secondary-brand/90 text-primary-container font-extrabold text-sm py-3 rounded-lg text-center transition-all cursor-pointer"
-              >
-                Seja Associado
-              </button>
-            </div>
-          </div>
-        )}
-      </header>
+      <Header />
+      
 
       {/* HERO SECTION */}
       <main className="flex-grow">
-        <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-6 md:px-12 overflow-hidden">
+        
+
+        <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 md:px-12 overflow-hidden">
           {/* Dynamic ambient backgrounds */}
           <div className="absolute inset-0 z-0 pointer-events-none">
             <div
@@ -386,8 +181,10 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-b from-primary-container via-transparent to-[#001430]" />
           </div>
 
-          <div className="relative z-10 w-full max-w-6xl mx-auto text-center flex flex-col items-center">
+          
+          <div className="relative z-10 w-full max-w-6xl mx-auto text-center flex flex-col items-center gap-20">
             {/* Tag & Anniversary badge */}
+            <LinksEvento />
             <div
               className="flex flex-col items-center mb-6"
               data-aos="fade-down"
@@ -419,36 +216,7 @@ export default function HomePage() {
             </p>
 
             {/* Simple Elegant Video Player Cover */}
-            <div
-              onClick={openVideo}
-              className="video-placeholder-container relative aspect-video w-full max-w-4xl rounded-2xl overflow-hidden group cursor-pointer transition-all hover:scale-[1.01] hover:border-secondary-brand/60"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <img
-                alt="Capa do Vídeo Institucional 55 Anos"
-                className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu71kY_yHTwR-O6Kg1qzY_766dTStBbPs9vYHdmT5nHq--RDpDFH7qVYYXCeaEBprlDjB2f4j8ovzv9NDGkwjgN91VxFlD5HgK8rp9HvCdSalssW_fDRMF4bew2lAYCwoVTe7_ewXugCR1EkOcpaH-r1y8jEdDdr_G1Dh7-_pAr_qZLy4uBn2X3UXRHWnAGE2BeDIeaqqqFFNwQR3onFGFW61ZKsFhO6iRXdA5-nRclmfFkDJCahUI14JGjuARd_EJkXOxHGCwFEio"
-              />
-              {/* Play Button Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/25 transition-colors">
-                <div className="w-16 h-16 md:w-24 md:h-24 bg-secondary-brand text-primary-container rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 active:scale-95 transition-all">
-                  <Play className="w-8 h-8 md:w-12 md:h-12 ml-1.5 fill-current text-primary-container" />
-                </div>
-              </div>
-
-              {/* Bottom HUD overlay */}
-              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end text-left z-10 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-4 rounded-xl">
-                <div>
-                  <p className="font-headline text-lg sm:text-xl font-bold text-white drop-shadow-lg">
-                    55 Anos CDL Cachoeiro
-                  </p>
-                </div>
-                <span className="hidden sm:inline-flex bg-white/10 text-white text-[10px] font-bold px-3 py-1 rounded-md tracking-wider">
-                  ASSISTIR AGORA
-                </span>
-              </div>
-            </div>
+            <Video />
           </div>
         </section>
 
@@ -549,296 +317,9 @@ export default function HomePage() {
         </section>
 
         {/* TIMELINE / LINHA DO TEMPO SECTION */}
-        <section
-          id="historia"
-          className="py-24 bg-gradient-to-b from-[#002351] to-[#00193c] relative overflow-hidden"
-        >
-          <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div
-              className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4"
-              data-aos="fade-up"
-            >
-              <div>
-                <span className="text-secondary-brand font-bold text-xs tracking-[0.2em] uppercase mb-3 block">
-                  Linha do Tempo
-                </span>
-                <h2 className="font-headline text-3xl md:text-4xl font-black text-white leading-tight">
-                  Evolução do Comércio do Sul do ES
-                </h2>
-              </div>
+        <Timeline />
 
-              {/* Timeline scroll buttons */}
-              <div className="flex gap-3">
-                <button
-                  onClick={() => scrollTimeline("left")}
-                  className="bg-white/5 hover:bg-secondary-brand hover:text-primary-container text-white p-3 rounded-full border border-white/10 transition-all cursor-pointer"
-                  aria-label="Anterior"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => scrollTimeline("right")}
-                  className="bg-white/5 hover:bg-secondary-brand hover:text-primary-container text-white p-3 rounded-full border border-white/10 transition-all cursor-pointer"
-                  aria-label="Próximo"
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Horizontal scrolling container */}
-            <div
-              ref={timelineRef}
-              className="timeline-scroll flex gap-8 overflow-x-auto pb-8 scroll-smooth snap-x"
-            >
-              {/* Milestone 1971 */}
-              <div
-                className="min-w-[300px] sm:min-w-[360px] snap-start bg-[#0b132b]/40 border border-white/5 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/20 transition-all group"
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
-                    1971
-                  </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
-                    O Nascimento da Entidade
-                  </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Fundada em 30 de julho, surge da união de empresários que
-                    trouxeram o SPC, revolucionando a venda a prazo e trazendo
-                    credibilidade e agilidade para o varejo de Cachoeiro.
-                  </p>
-                </div>
-                <div className="border-t border-white/5 pt-4 mt-6">
-                  <span className="text-[10px] text-secondary-brand font-bold uppercase tracking-wider block">
-                    CONQUISTA HISTÓRICA
-                  </span>
-                </div>
-              </div>
-
-              {/* Milestone 1978 */}
-              <div
-                className="min-w-[300px] sm:min-w-[360px] snap-start bg-[#0b132b]/40 border border-white/5 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/20 transition-all group"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
-                    1978
-                  </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
-                    Patrimônio Institucional
-                  </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    A entidade conquista sua primeira sede administrativa com a
-                    aquisição de sua primeira sala no Edifício Hércules,
-                    consolidando um espaço físico próprio de atendimento.
-                  </p>
-                </div>
-                <div className="border-t border-white/5 pt-4 mt-6">
-                  <span className="text-[10px] text-secondary-brand font-bold uppercase tracking-wider block">
-                    SEDE PRÓPRIA
-                  </span>
-                </div>
-              </div>
-
-              {/* Milestone 1988 */}
-              <div
-                className="min-w-[300px] sm:min-w-[360px] snap-start bg-[#0b132b]/40 border border-white/5 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/20 transition-all group"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
-                    1988
-                  </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
-                    Informatização & Agilidade
-                  </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Aceleração da transformação digital e início da adaptação de
-                    processos internos de busca manual em papel para as
-                    consultas velozes digitais.
-                  </p>
-                </div>
-                <div className="border-t border-white/5 pt-4 mt-6">
-                  <span className="text-[10px] text-secondary-brand font-bold uppercase tracking-wider block">
-                    ERA DOS COMPUTADORES
-                  </span>
-                </div>
-              </div>
-
-              {/* Milestone 1990 */}
-              <div
-                className="min-w-[300px] sm:min-w-[360px] snap-start bg-[#0b132b]/40 border border-white/5 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/20 transition-all group"
-                data-aos="fade-up"
-                data-aos-delay="400"
-              >
-                <div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
-                    1990
-                  </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
-                    Grandes Campanhas de Natal
-                  </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Lançamento de campanhas promocionais com sorteio de
-                    automóveis na Praça Jerônimo Monteiro, atraindo consumidores
-                    de todo o sul capixaba.
-                  </p>
-                </div>
-                <div className="border-t border-white/5 pt-4 mt-6">
-                  <span className="text-[10px] text-secondary-brand font-bold uppercase tracking-wider block">
-                    PROPAGAÇÃO ECONÔMICA
-                  </span>
-                </div>
-              </div>
-
-              {/* Milestone 1996 */}
-              <div
-                className="min-w-[300px] sm:min-w-[360px] snap-start bg-[#0b132b]/40 border border-white/5 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/20 transition-all group"
-                data-aos="fade-up"
-                data-aos-delay="500"
-              >
-                <div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand/20 block mb-4 group-hover:text-secondary-brand/40 transition-colors">
-                    1996
-                  </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
-                    Digitalização do SPC
-                  </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Substituição do atendimento via rádio por servidores
-                    centrais dedicados de alta performance conectados à rede
-                    nacional do SPC Brasil.
-                  </p>
-                </div>
-                <div className="border-t border-white/5 pt-4 mt-6">
-                  <span className="text-[10px] text-secondary-brand font-bold uppercase tracking-wider block">
-                    SISTEMAS EM REDE
-                  </span>
-                </div>
-              </div>
-
-              {/* Milestone 2018 */}
-              <div
-                className="min-w-[300px] sm:min-w-[360px] snap-start bg-secondary-brand/5 border border-secondary-brand/35 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/50 transition-all group"
-                data-aos="fade-up"
-                data-aos-delay="600"
-              >
-                <div>
-                  <div className="absolute top-8 right-8 text-secondary-brand">
-                    <Star className="w-6 h-6 fill-current text-secondary-brand" />
-                  </div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand block mb-4">
-                    2018
-                  </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
-                    Referência Digital & Convenções
-                  </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Inauguração da moderna sede administrativa contendo
-                    auditório completo de convenções e consolidação nacional
-                    como uma das maiores emissoras de certificações digitais.
-                  </p>
-                </div>
-                <div className="border-t border-secondary-brand/20 pt-4 mt-6">
-                  <span className="text-[10px] text-secondary-brand font-black uppercase tracking-wider block">
-                    DESTAQUE NACIONAL
-                  </span>
-                </div>
-              </div>
-
-              {/* Milestone 2026 */}
-              <div
-                className="min-w-[300px] sm:min-w-[360px] snap-start bg-secondary-brand/5 border border-secondary-brand/35 p-8 rounded-2xl relative flex flex-col justify-between hover:border-secondary-brand/50 transition-all group"
-                data-aos="fade-up"
-                data-aos-delay="700"
-              >
-                <div>
-                  <div className="absolute top-8 right-8 text-secondary-brand">
-                    <Sparkles className="w-6 h-6 animate-pulse text-secondary-brand" />
-                  </div>
-                  <span className="text-4xl sm:text-5xl font-headline font-black text-secondary-brand block mb-4">
-                    2026
-                  </span>
-                  <h3 className="font-headline font-bold text-lg sm:text-xl text-white mb-3">
-                    55 Anos de Liderança
-                  </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                    Consolidação multissetorial e fomento financeiro acelerado.
-                    Hub completo ligando mais de 800 empresas associadas ao
-                    fomento estadual e modernização via IA.
-                  </p>
-                </div>
-                <div className="border-t border-secondary-brand/20 pt-4 mt-6">
-                  <span className="text-[10px] text-secondary-brand font-black uppercase tracking-wider block">
-                    PRESENTE & FUTURO
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* IMAGE GALLERY SECTION */}
-        <section
-          id="galeria"
-          className="py-24 md:py-32 bg-primary-container relative"
-        >
-          <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div
-              className="text-center max-w-2xl mx-auto mb-16"
-              data-aos="fade-up"
-            >
-              <span className="text-secondary-brand font-bold text-xs tracking-[0.2em] uppercase mb-3 block">
-                Acervo Visual
-              </span>
-              <h2 className="font-headline text-3xl md:text-4xl font-black text-white mb-4">
-                Galeria de Imagens
-              </h2>
-              <p className="text-on-surface-variant text-sm md:text-base">
-                Acompanhe os momentos históricos, reuniões e eventos que
-                ajudaram a pavimentar os 55 anos de progresso do comércio de
-                Cachoeiro de Itapemirim.
-              </p>
-            </div>
-
-            {/* Responsive bento-like grid of photos */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {galleryImages.map((img, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    setCurrentImgIndex(idx);
-                    setLightboxOpen(true);
-                  }}
-                  className="gallery-item group relative h-72 rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-secondary-brand/30 transition-all"
-                  data-aos="fade-up"
-                  data-aos-delay={(idx + 1) * 50}
-                >
-                  <Image
-                    src={img.src}
-                    alt={img.title}
-                    fill
-                    loading="lazy"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    placeholder="blur"
-                    blurDataURL={BLUR_PLACEHOLDER}
-                    referrerPolicy="no-referrer"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent flex flex-col justify-end p-5">
-                    <p className="text-white text-sm font-semibold">
-                      {img.title}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Galeria />
 
         {/* CURRENT PRESIDENT FEATURED SECTION */}
         <section
@@ -1029,7 +510,7 @@ export default function HomePage() {
               </h2>
             </div>
             <AtualDiretoria />
-            <LinksEvento />
+            
           </div>
         </section>
 
@@ -1325,78 +806,12 @@ export default function HomePage() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-
-            {/* Jubilee Medallion Icon */}
-            {/* <div className="mt-16 flex justify-center">
-              <div className="w-20 h-20 rounded-full border border-secondary-container/30 bg-secondary-container/5 flex items-center justify-center shadow-inner">
-                <span className="font-headline font-black text-secondary-container text-2xl">
-                  55
-                </span>
-              </div>
-            </div> */}
           </div>
         </section>
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-primary-container border-t border-white/5 py-12 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* Logo Brand */}
-          <div>
-            <div className="font-headline text-lg md:text-xl font-black text-white flex items-center gap-3">
-              <Image
-                src="/img/layout/cdlcachoeiro.png"
-                alt="CDL Cachoeiro 55 Anos"
-                width={160}
-                height={48}
-                className="h-12 w-auto object-contain"
-                referrerPolicy="no-referrer"
-                priority
-              />
-            </div>
-          </div>
-
-          {/* Navigation links */}
-          <div className="flex gap-6 md:gap-8 text-xs font-semibold text-on-surface-variant">
-            <a
-              href="#historia"
-              className="hover:text-secondary-brand transition-colors"
-            >
-              História
-            </a>
-            <a
-              href="#manifesto"
-              className="hover:text-secondary-brand transition-colors"
-            >
-              Manifesto
-            </a>
-            <a
-              href="#galeria"
-              className="hover:text-secondary-brand transition-colors"
-            >
-              Galeria
-            </a>
-            <a
-              href="#servicos"
-              className="hover:text-secondary-brand transition-colors"
-            >
-              Serviços
-            </a>
-          </div>
-
-          {/* Copyright */}
-          <p className="text-xs text-on-surface-variant text-center md:text-right">
-            © 2026 CDL Cachoeiro. 55 anos impulsionando o desenvolvimento
-            regional.
-          </p>
-        </div>
-        <p className="text-xs text-on-surface-variant text-center md:text-center">
-          Site desenvolvido por{" "}
-          <Link href="https://comconteudo.com.br" className="font-semibold">
-            Agência Conteúdo
-          </Link>
-        </p>
-      </footer>
+      <Footer />
 
       {/* INTERACTIVE OVERLAYS & MODALS */}
 
@@ -1435,101 +850,8 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* 2. "SEJA ASSOCIADO" CONTACT MODAL */}
-      {contactModalOpen && (
-        <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setContactModalOpen(false);
-          }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
-        >
-          <div className="bg-primary-container border border-white/10 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col relative max-h-[90vh]">
-            {/* Close Button */}
-            <button
-              onClick={() => setContactModalOpen(false)}
-              className="absolute top-4 right-4 z-10 text-on-background/70 hover:text-white p-1 rounded-full hover:bg-white/5 transition-all cursor-pointer"
-              aria-label="Fechar"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="p-6 md:p-8 border-b border-white/5 bg-white/2">
-              <span className="text-secondary-brand font-bold text-[10px] tracking-widest block uppercase mb-1">
-                Cresça Conosco
-              </span>
-              <h3 className="font-headline font-black text-2xl text-white">
-                Solicitar Associação
-              </h3>
-              <p className="text-xs text-on-surface-variant mt-1">
-                Preencha os dados e entraremos em contato rapidamente para
-                oficializar sua entrada.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* 3. PHOTO LIGHTBOX MODAL */}
-      {lightboxOpen && (
-        <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setLightboxOpen(false);
-          }}
-          className="fixed inset-0 z-50 flex flex-col justify-between p-4 bg-black/95 backdrop-blur-md animate-in fade-in duration-200"
-        >
-          {/* Lightbox Header (close / counter) */}
-          <div className="flex justify-between items-center p-4 z-10">
-            <span className="text-xs font-semibold text-white/60 uppercase tracking-widest font-mono">
-              {currentImgIndex + 1} de {galleryImages.length}
-            </span>
-            <button
-              onClick={() => setLightboxOpen(false)}
-              className="text-white hover:text-secondary-brand bg-white/5 hover:bg-white/15 p-2 rounded-full transition-all cursor-pointer"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Main Display */}
-          <div className="flex-grow flex items-center justify-center relative px-12">
-            {/* Prev Button */}
-            <button
-              onClick={() =>
-                setCurrentImgIndex(
-                  (prev) =>
-                    (prev - 1 + galleryImages.length) % galleryImages.length,
-                )
-              }
-              className="absolute left-4 bg-white/5 hover:bg-secondary-brand hover:text-primary-container text-white p-3 rounded-full border border-white/10 transition-all cursor-pointer"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-
-            {/* Dynamic Image */}
-            <Image
-              width={1200}
-              height={800}
-              placeholder="blur"
-              blurDataURL={BLUR_PLACEHOLDER}
-              referrerPolicy="no-referrer"
-              className="max-w-full max-h-[70vh] w-auto h-auto rounded-lg object-contain shadow-2xl transition-all duration-300"
-              src={galleryImages[currentImgIndex].src}
-              alt={galleryImages[currentImgIndex].title}
-            />
-
-            {/* Next Button */}
-            <button
-              onClick={() =>
-                setCurrentImgIndex((prev) => (prev + 1) % galleryImages.length)
-              }
-              className="absolute right-4 bg-white/5 hover:bg-secondary-brand hover:text-primary-container text-white p-3 rounded-full border border-white/10 transition-all cursor-pointer"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
-      )}
+      
 
       {/* SCROLL TO TOP BUTTON */}
       {scrollTopVisible && (
