@@ -9,7 +9,8 @@ export default function LinksEvento() {
     >
       <hr className="border-2 border-amber-500 w-1/2 mb-5" />
       <h2 className="text-2xl font-bold text-center text-white mb-4">
-        Confira as fotos do evento de comemoração dos 55 anos da CDL Cachoeiro!
+        Confira a cobertura do evento de comemoração dos 55 anos da CDL
+        Cachoeiro!
       </h2>
 
       <div
@@ -36,7 +37,10 @@ export default function LinksEvento() {
         />
       </div>
 
-      <div className="flex justify-center items-center mt-5 gap-5 flex-wrap" id="festa55anos">
+      <div
+        className="flex justify-center items-center mt-5 gap-5 flex-wrap"
+        id="festa55anos"
+      >
         <Link
           href="https://drive.google.com/drive/folders/1nuL8KMkVMsXqUiAlTih3Ha8lSOi8hyzt?usp=sharing"
           target="_blank"
@@ -55,6 +59,19 @@ export default function LinksEvento() {
           Fotos - Galeria 2
         </Link>
       </div>
+      <iframe
+        width="896"
+        height="500"
+        src="https://www.youtube.com/embed/w7-nas9efws?si=XpphlrqREfLPwhGP"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        className="mt-15 video-placeholder-container relative aspect-video w-full max-w-4xl rounded-2xl overflow-hidden group cursor-pointer transition-all hover:scale-[1.01] hover:border-secondary-brand/60"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      ></iframe>
     </div>
   );
 }

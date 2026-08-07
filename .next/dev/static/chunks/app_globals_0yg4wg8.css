@@ -668,6 +668,14 @@
     margin-top: calc(var(--spacing) * 12);
   }
 
+  .mt-15 {
+    margin-top: calc(var(--spacing) * 15);
+  }
+
+  .mt-20 {
+    margin-top: calc(var(--spacing) * 20);
+  }
+
   .mb-1 {
     margin-bottom: var(--spacing);
   }
@@ -1091,10 +1099,6 @@
 
   .gap-8 {
     gap: calc(var(--spacing) * 8);
-  }
-
-  .gap-10 {
-    gap: calc(var(--spacing) * 10);
   }
 
   .gap-12 {
@@ -3033,10 +3037,6 @@
 
     .md\:flex-row {
       flex-direction: row;
-    }
-
-    .md\:flex-nowrap {
-      flex-wrap: nowrap;
     }
 
     .md\:items-end {
