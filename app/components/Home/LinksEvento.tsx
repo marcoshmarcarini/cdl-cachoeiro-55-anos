@@ -43,7 +43,7 @@ export default function LinksEvento() {
           rel="noopener noreferrer"
           className="flex text-center m-auto justify-center items-center mt-12 inline-block bg-secondary-brand text-primary-container font-bold text-sm md:text-base px-6 py-3 rounded-lg hover:bg-secondary-brand/90 transition-all"
         >
-          Fotos - MR Studio
+          Fotos - Galeria 1
         </Link>
 
         <Link
@@ -52,7 +52,7 @@ export default function LinksEvento() {
           rel="noopener noreferrer"
           className="flex text-center m-auto justify-center items-center mt-12 inline-block bg-secondary-brand text-primary-container font-bold text-sm md:text-base px-6 py-3 rounded-lg hover:bg-secondary-brand/90 transition-all"
         >
-          Fotos - Wallace Hull
+          Fotos - Galeria 2
         </Link>
       </div>
     </div>
